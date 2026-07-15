@@ -1,17 +1,11 @@
-function SectionHeading({
-  subtitle,
-  title,
-  description,
-}) {
+function SectionHeading({ eyebrow, title, description }) {
   return (
-    <div className="mx-auto mb-16 max-w-3xl text-center">
-      {subtitle && (
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-violet-400">
-          {subtitle}
-        </p>
-      )}
+    <div className="mb-16 max-w-3xl">
+      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-400">
+        {eyebrow}
+      </p>
 
-      <h2 className="text-4xl font-bold text-white md:text-5xl">
+      <h2 className="mt-4 text-4xl font-black text-white md:text-5xl">
         {title}
       </h2>
 
