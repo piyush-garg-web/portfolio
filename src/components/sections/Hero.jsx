@@ -1,14 +1,11 @@
-import {
-  FaGithub,
-  FaLinkedin,
-} from "react-icons/fa";
-
-import {
-  SiLeetcode,
-  SiGeeksforgeeks,
-} from "react-icons/si";
+import { motion } from "framer-motion";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiGeeksforgeeks, SiLeetcode } from "react-icons/si";
 
 import Button from "../common/Button";
+import AnimatedBackground from "../effects/AnimatedBackground";
+import GradientOrb from "../effects/GradientOrb";
+
 import personal from "../../data/personal";
 import codingProfiles from "../../data/codingProfiles";
 
@@ -18,7 +15,29 @@ function Hero() {
       id="home"
       className="relative flex min-h-screen items-center overflow-hidden"
     >
-      <div className="mx-auto flex w-full max-w-7xl flex-col px-6 sm:px-8 lg:px-12">
+      {/* Background */}
+      <AnimatedBackground />
+
+      <GradientOrb
+        color="bg-violet-600"
+        className="-left-40 top-20 h-[350px] w-[350px]"
+      />
+
+      <GradientOrb
+        color="bg-blue-600"
+        className="bottom-10 right-0 h-[300px] w-[300px]"
+      />
+
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut",
+        }}
+        className="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 sm:px-8 lg:px-12"
+      >
         <p className="mb-5 text-sm font-medium uppercase tracking-[0.3em] text-violet-400">
           {personal.availability}
         </p>
@@ -39,58 +58,59 @@ function Hero() {
           {personal.description}
         </p>
 
+        {/* CTA Buttons */}
         <div className="mt-10 flex flex-wrap gap-4">
-  <Button href="#projects">
-    {personal.cta.primary}
-  </Button>
+          <Button href="#projects">
+            {personal.cta.primary}
+          </Button>
 
-  <Button
-    href={personal.resume}
-    variant="secondary"
-  >
-    {personal.cta.secondary}
-  </Button>
-</div>
+          <Button
+            href={personal.resume}
+            variant="secondary"
+          >
+            {personal.cta.secondary}
+          </Button>
+        </div>
 
-<div className="mt-12 flex items-center gap-6 text-2xl text-gray-400">
-  <a
-    href={codingProfiles.github.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="transition hover:text-white"
-  >
-    <FaGithub />
-  </a>
+        {/* Social Links */}
+        <div className="mt-12 flex items-center gap-6 text-2xl text-gray-400">
+          <a
+            href={codingProfiles.github.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors duration-300 hover:text-white"
+          >
+            <FaGithub />
+          </a>
 
-  <a
-    href={codingProfiles.linkedin.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="transition hover:text-[#0A66C2]"
-  >
-    <FaLinkedin />
-  </a>
+          <a
+            href={codingProfiles.linkedin.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors duration-300 hover:text-[#0A66C2]"
+          >
+            <FaLinkedin />
+          </a>
 
-  <a
-    href={codingProfiles.leetcode.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="transition hover:text-[#FFA116]"
-  >
-    <SiLeetcode />
-  </a>
+          <a
+            href={codingProfiles.leetcode.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors duration-300 hover:text-[#FFA116]"
+          >
+            <SiLeetcode />
+          </a>
 
-  <a
-    href={codingProfiles.gfg.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="transition hover:text-[#2F8D46]"
-  >
-    <SiGeeksforgeeks />
-  </a>
-</div>
-
-      </div>
+          <a
+            href={codingProfiles.gfg.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors duration-300 hover:text-[#2F8D46]"
+          >
+            <SiGeeksforgeeks />
+          </a>
+        </div>
+      </motion.div>
     </section>
   );
 }

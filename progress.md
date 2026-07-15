@@ -1,9 +1,11 @@
-## Day 2 – Phase 4
+## Day 2 – Phase 5
 
 ### ✅ Completed
 
-- Installed core animation and utility libraries
-- Created production-ready assets directory
-- Added `.gitkeep` placeholders for Git tracking
-- Added reusable `effects` component architecture
-- Prepared the project for animations and interactive visuals
+- Added reusable animated background
+- Added reusable gradient orb component
+- Added grid overlay
+- Integrated Framer Motion into Hero
+- Implemented first entrance animation
+
+The Hero now has the visual foundation for advanced effects and interactions.
