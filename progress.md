@@ -1,8 +1,10 @@
-## Day 2 – Phase 7
+## Day 2 – Phase 8
 
 ### ✅ Completed
 
-- Rebuilt Hero into a responsive two-column grid
-- Added reusable ProfileCard component
-- Integrated profile image placeholder
-- Improved Hero layout for desktop and mobile
+- Created reusable StatCard component
+- Created reusable TechChip component
+- Redesigned ProfileCard with glassmorphism
+- Added coding statistics
+- Added technology chips
+- Added gradient glow behind profile card
