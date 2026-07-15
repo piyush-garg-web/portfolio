@@ -1,36 +1,32 @@
-import navigation from "../../constants/navigation";
 import Button from "../common/Button";
+import Logo from "../ui/Logo";
+
+import navigation from "../../data/navigation";
+import personal from "../../data/personal";
 
 function Navbar() {
   return (
-    <header className="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
-        {/* Logo */}
-        <a
-          href="#home"
-          className="text-2xl font-bold tracking-tight"
-        >
-          Piyush<span className="text-violet-500">.</span>
-        </a>
+    <header className="fixed left-0 top-0 z-50 w-full">
+      <nav className="mx-auto mt-5 flex max-w-7xl items-center justify-between rounded-2xl border border-white/10 bg-black/30 px-6 py-4 backdrop-blur-xl">
+        <Logo />
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-8 lg:flex">
+        <ul className="hidden items-center gap-8 lg:flex">
           {navigation.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className="text-sm text-gray-300 transition hover:text-white"
-            >
-              {item.label}
-            </a>
+            <li key={item.label}>
+              <a
+                href={item.href}
+                className="text-sm text-gray-300 transition hover:text-white"
+              >
+                {item.label}
+              </a>
+            </li>
           ))}
-        </nav>
+        </ul>
 
-        {/* Resume Button */}
-        <div className="hidden lg:block">
-          <Button>Resume</Button>
-        </div>
-      </div>
+        <Button href={personal.resume}>
+          Resume
+        </Button>
+      </nav>
     </header>
   );
 }

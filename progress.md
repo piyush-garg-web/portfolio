@@ -1,10 +1,9 @@
-## Day 2 – Phase 8
+## Day 2 – Phase 9
 
 ### ✅ Completed
 
-- Created reusable StatCard component
-- Created reusable TechChip component
-- Redesigned ProfileCard with glassmorphism
-- Added coding statistics
-- Added technology chips
-- Added gradient glow behind profile card
+- Added centralized navigation data
+- Created reusable Logo component
+- Built responsive glassmorphism navbar
+- Integrated sticky navigation into the application
+- Adjusted Hero spacing for fixed header
