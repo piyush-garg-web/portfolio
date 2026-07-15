@@ -1,1 +1,69 @@
 @import "tailwindcss";
+
+/* ------------------------------
+   Global Theme
+------------------------------ */
+
+:root {
+  --background: #030712;
+  --surface: #111827;
+  --primary: #7c3aed;
+  --secondary: #2563eb;
+  --text: #ffffff;
+  --text-secondary: #9ca3af;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+/* ------------------------------
+   Base Styles
+------------------------------ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  user-select: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* ------------------------------
+   Scrollbar
+------------------------------ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
