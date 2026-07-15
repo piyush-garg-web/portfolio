@@ -1,6 +1,7 @@
 import Navbar from "./components/layout/Navbar";
 import Section from "./components/layout/Section";
 import Hero from "./components/sections/Hero";
+import About from "./components/sections/About";
 
 function App() {
   return (
@@ -10,9 +11,7 @@ function App() {
       <main>
         <Hero />
 
-        <Section id="about">
-          <h2 className="text-5xl font-bold">About</h2>
-        </Section>
+       <About />
 
         <Section id="skills">
           <h2 className="text-5xl font-bold">Skills</h2>
