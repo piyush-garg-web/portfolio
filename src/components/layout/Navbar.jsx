@@ -12,15 +12,15 @@ function Navbar() {
 
         <ul className="hidden items-center gap-8 lg:flex">
           {navigation.map((item) => (
-            <li key={item.label}>
-              <a
-                href={item.href}
-                className="text-sm text-gray-300 transition hover:text-white"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
+  <li key={item.href}>
+    <a
+      href={item.href}
+      className="text-sm text-gray-300 transition hover:text-white"
+    >
+      {item.name}
+    </a>
+  </li>
+))}
         </ul>
 
         <Button href={personal.resume}>
