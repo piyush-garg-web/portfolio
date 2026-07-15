@@ -14,7 +14,7 @@ const personal = {
 
   email: "piyushgarg6702@gmail.com",
 
-  resume: "/assets/resume/resume.pdf",
+  resume: "/assets/resume/Piyush_Garg_Resume.pdf",
 
   availability: "Open to Software Engineering Internship Opportunities",
 
