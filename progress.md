@@ -1,11 +1,9 @@
-## Day 2 – Phase 5
+## Day 2 – Phase 6
 
 ### ✅ Completed
 
-- Added reusable animated background
-- Added reusable gradient orb component
-- Added grid overlay
-- Integrated Framer Motion into Hero
-- Implemented first entrance animation
-
-The Hero now has the visual foundation for advanced effects and interactions.
+- Created reusable Badge component
+- Created reusable SocialLinks component
+- Created reusable SectionHeading component
+- Refactored Hero to use shared UI components
+- Continued building the project's design system

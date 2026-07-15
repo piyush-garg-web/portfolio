@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { SiGeeksforgeeks, SiLeetcode } from "react-icons/si";
+
 
 import Button from "../common/Button";
 import AnimatedBackground from "../effects/AnimatedBackground";
 import GradientOrb from "../effects/GradientOrb";
 
 import personal from "../../data/personal";
-import codingProfiles from "../../data/codingProfiles";
+import Badge from "../ui/Badge";
+import SocialLinks from "../ui/SocialLinks";
 
 function Hero() {
   return (
@@ -38,9 +38,9 @@ function Hero() {
         }}
         className="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 sm:px-8 lg:px-12"
       >
-        <p className="mb-5 text-sm font-medium uppercase tracking-[0.3em] text-violet-400">
-          {personal.availability}
-        </p>
+      <Badge>
+  {personal.availability}
+</Badge>
 
         <h1 className="max-w-5xl text-5xl font-black leading-tight sm:text-6xl lg:text-7xl">
           {personal.name}
@@ -73,43 +73,9 @@ function Hero() {
         </div>
 
         {/* Social Links */}
-        <div className="mt-12 flex items-center gap-6 text-2xl text-gray-400">
-          <a
-            href={codingProfiles.github.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors duration-300 hover:text-white"
-          >
-            <FaGithub />
-          </a>
-
-          <a
-            href={codingProfiles.linkedin.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors duration-300 hover:text-[#0A66C2]"
-          >
-            <FaLinkedin />
-          </a>
-
-          <a
-            href={codingProfiles.leetcode.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors duration-300 hover:text-[#FFA116]"
-          >
-            <SiLeetcode />
-          </a>
-
-          <a
-            href={codingProfiles.gfg.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors duration-300 hover:text-[#2F8D46]"
-          >
-            <SiGeeksforgeeks />
-          </a>
-        </div>
+        <div className="mt-12">
+  <SocialLinks />
+</div>
       </motion.div>
     </section>
   );
