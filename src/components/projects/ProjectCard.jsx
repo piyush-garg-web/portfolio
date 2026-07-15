@@ -14,7 +14,10 @@ function ProjectCard({ project, reverse }) {
     reverse ? "lg:[&>*:first-child]:order-2" : ""
   }`}
 >
-      <ProjectGallery cover={project.cover} />
+      <ProjectGallery
+  cover={project.cover}
+  gallery={project.gallery}
+/>
 
       <div>
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-400">
