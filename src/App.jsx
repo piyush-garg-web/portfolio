@@ -2,6 +2,7 @@ import Navbar from "./components/layout/Navbar";
 import Section from "./components/layout/Section";
 import Hero from "./components/sections/Hero";
 import About from "./components/sections/About";
+import Skills from "./components/sections/Skills";
 
 function App() {
   return (
@@ -13,9 +14,7 @@ function App() {
 
        <About />
 
-        <Section id="skills">
-          <h2 className="text-5xl font-bold">Skills</h2>
-        </Section>
+        <Skills />
 
         <Section id="projects">
           <h2 className="text-5xl font-bold">Projects</h2>

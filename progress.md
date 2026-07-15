@@ -1,9 +1,8 @@
-## Day 2 – Phase 12
+## Day 2 – Phase 13
 
 ### ✅ Completed
 
-- Built the About section
-- Connected About data with reusable components
-- Added responsive two-column layout
-- Added animated content blocks
-- Replaced About placeholder in App.jsx
+- Built reusable SkillCard component
+- Built responsive Skills section
+- Connected centralized skills data
+- Added animated category cards
