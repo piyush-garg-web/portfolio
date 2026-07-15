@@ -1,9 +1,9 @@
-## Day 3 – Phase 1
+## Day 3 – Phase 2
 
 ### ✅ Completed
 
-- Redesigned projects data structure
-- Added complete project metadata
-- Added gallery support
-- Added feature lists
-- Created dedicated project component architecture
+- Created reusable ProjectGallery component
+- Created reusable ProjectTech component
+- Created reusable FeatureList component
+- Built reusable ProjectCard component
+- Updated Button to support icons
