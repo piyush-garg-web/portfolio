@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 
 import Section from "../layout/Section";
+import SectionHeading from "../ui/SectionHeading";
 
 import journey from "../../data/journey";
 
@@ -16,20 +17,15 @@ function Journey() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
+        className="flex flex-col items-center text-center"
       >
-        <p className="text-center text-sm font-semibold uppercase tracking-[0.3em] text-violet-400">
-          My Journey
-        </p>
-
-        <h2 className="mt-4 text-center text-5xl font-black">
-          Learning, Building & Growing
-        </h2>
-
-        <p className="mx-auto mt-6 max-w-3xl text-center text-gray-400">
-          My journey from an Information Technology student to a Full Stack
+        <SectionHeading
+          eyebrow="My Journey"
+          title="Learning, Building & Growing"
+          description="My journey from an Information Technology student to a Full Stack
           Developer building production-ready applications while continuously
-          improving problem-solving skills.
-        </p>
+          improving problem-solving skills."
+        />
       </motion.div>
 
       <div className="relative mt-24">
