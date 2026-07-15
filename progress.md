@@ -1,9 +1,8 @@
-## Day 2 – Phase 6
+## Day 2 – Phase 7
 
 ### ✅ Completed
 
-- Created reusable Badge component
-- Created reusable SocialLinks component
-- Created reusable SectionHeading component
-- Refactored Hero to use shared UI components
-- Continued building the project's design system
+- Rebuilt Hero into a responsive two-column grid
+- Added reusable ProfileCard component
+- Integrated profile image placeholder
+- Improved Hero layout for desktop and mobile

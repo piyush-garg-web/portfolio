@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 
-
 import Button from "../common/Button";
 import AnimatedBackground from "../effects/AnimatedBackground";
 import GradientOrb from "../effects/GradientOrb";
 
 import personal from "../../data/personal";
+
 import Badge from "../ui/Badge";
 import SocialLinks from "../ui/SocialLinks";
+import ProfileCard from "../ui/ProfileCard";
 
 function Hero() {
   return (
@@ -36,46 +37,52 @@ function Hero() {
           duration: 0.8,
           ease: "easeOut",
         }}
-        className="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 sm:px-8 lg:px-12"
+        className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-20 px-6 py-24 lg:grid-cols-2 lg:px-12"
       >
-      <Badge>
-  {personal.availability}
-</Badge>
+        {/* Left Column */}
+        <div>
+          <Badge>{personal.availability}</Badge>
 
-        <h1 className="max-w-5xl text-5xl font-black leading-tight sm:text-6xl lg:text-7xl">
-          {personal.name}
-        </h1>
+          <h1 className="mt-6 max-w-5xl text-5xl font-black leading-tight sm:text-6xl lg:text-7xl">
+            {personal.name}
+          </h1>
 
-        <h2 className="mt-6 text-2xl font-semibold text-gray-300 sm:text-3xl">
-          {personal.role}
-        </h2>
+          <h2 className="mt-6 text-2xl font-semibold text-gray-300 sm:text-3xl">
+            {personal.role}
+          </h2>
 
-        <p className="mt-3 text-lg text-violet-400">
-          {personal.tagline}
-        </p>
+          <p className="mt-3 text-lg text-violet-400">
+            {personal.tagline}
+          </p>
 
-        <p className="mt-8 max-w-2xl text-lg leading-8 text-gray-400">
-          {personal.description}
-        </p>
+          <p className="mt-8 max-w-2xl text-lg leading-8 text-gray-400">
+            {personal.description}
+          </p>
 
-        {/* CTA Buttons */}
-        <div className="mt-10 flex flex-wrap gap-4">
-          <Button href="#projects">
-            {personal.cta.primary}
-          </Button>
+          {/* CTA Buttons */}
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Button href="#projects">
+              {personal.cta.primary}
+            </Button>
 
-          <Button
-            href={personal.resume}
-            variant="secondary"
-          >
-            {personal.cta.secondary}
-          </Button>
+            <Button
+              href={personal.resume}
+              variant="secondary"
+            >
+              {personal.cta.secondary}
+            </Button>
+          </div>
+
+          {/* Social Links */}
+          <div className="mt-12">
+            <SocialLinks />
+          </div>
         </div>
 
-        {/* Social Links */}
-        <div className="mt-12">
-  <SocialLinks />
-</div>
+        {/* Right Column */}
+        <div className="flex justify-center">
+          <ProfileCard />
+        </div>
       </motion.div>
     </section>
   );
