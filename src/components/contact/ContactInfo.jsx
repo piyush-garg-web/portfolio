@@ -1,6 +1,8 @@
 import { Mail, Phone, MapPin } from "lucide-react";
 
 import contact from "../../data/contact";
+import { Mail, Phone, MapPin, Copy } from "lucide-react";
+import toast from "react-hot-toast";
 
 function ContactInfo() {
   const items = [
@@ -23,6 +25,12 @@ function ContactInfo() {
     },
   ];
 
+  const copy = (text, label) => {
+  navigator.clipboard.writeText(text);
+
+  toast.success(`${label} copied`);
+};
+
   return (
     <div className="space-y-6">
       {items.map((item) => {
@@ -43,12 +51,14 @@ function ContactInfo() {
               </p>
 
               {item.href ? (
-                <a
-                  href={item.href}
-                  className="text-white transition hover:text-violet-400"
-                >
-                  {item.value}
-                </a>
+             <button
+  onClick={() => copy(item.value, item.label)}
+  className="flex items-center gap-2 text-left text-white transition hover:text-violet-400"
+>
+  {item.value}
+
+  <Copy size={15} />
+</button>
               ) : (
                 <p className="text-white">
                   {item.value}
