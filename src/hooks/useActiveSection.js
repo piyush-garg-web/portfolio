@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 
-function useActiveSection(ids) {
-  const [active, setActive] = useState(ids[0]);
+function useActiveSection() {
+  const [active, setActive] = useState("home");
 
   useEffect(() => {
-    const sections = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
+    const sections = document.querySelectorAll("section[id]");
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -17,14 +15,15 @@ function useActiveSection(ids) {
         });
       },
       {
-        threshold: 0.4,
+        rootMargin: "-35% 0px -55% 0px",
+        threshold: 0,
       }
     );
 
     sections.forEach((section) => observer.observe(section));
 
     return () => observer.disconnect();
-  }, [ids]);
+  }, []);
 
   return active;
 }

@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import navigation from "../../data/navigation";
+import useActiveSection from "../../hooks/useActiveSection";
 
 function MobileMenu({ open, setOpen }) {
   return (

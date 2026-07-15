@@ -1,10 +1,9 @@
-## ✅ Phase 11.5 – Mobile Navigation
+## ✅ Phase 11.6 – Active Navigation
 
 Completed:
-- Responsive hamburger menu
-- Animated slide-in mobile drawer
-- Backdrop overlay
-- Auto-close on navigation
-- Responsive desktop/mobile behavior
+- Scroll spy navigation
+- Active link highlighting
+- Animated underline
+- Mobile active state
 
 Status: ✅ Completed
