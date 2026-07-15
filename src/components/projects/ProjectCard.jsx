@@ -1,4 +1,5 @@
-import { Github, ExternalLink } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
 
 import Button from "../common/Button";
 
@@ -40,7 +41,7 @@ function ProjectCard({ project, reverse }) {
 
         <div className="mt-10 flex flex-wrap gap-4">
           <Button href={project.github}>
-            <Github size={18} />
+            <FaGithub size={18} />
             GitHub
           </Button>
 
@@ -48,7 +49,7 @@ function ProjectCard({ project, reverse }) {
             href={project.live}
             variant="secondary"
           >
-            <ExternalLink size={18} />
+            <FiExternalLink size={18} />
             Live Demo
           </Button>
         </div>

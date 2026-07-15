@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { FaCheck } from "react-icons/fa";
 
 function FeatureList({ features }) {
   return (
@@ -8,10 +8,7 @@ function FeatureList({ features }) {
           key={feature}
           className="flex items-center gap-3"
         >
-          <Check
-            size={18}
-            className="text-violet-400"
-          />
+         <FaCheck size={14} className="text-violet-400" />
 
           <span className="text-gray-300">
             {feature}
