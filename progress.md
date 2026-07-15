@@ -1,9 +1,9 @@
-## Day 3 – Phase 2
+## Day 3 – Phase 3
 
 ### ✅ Completed
 
-- Created reusable ProjectGallery component
-- Created reusable ProjectTech component
-- Created reusable FeatureList component
-- Built reusable ProjectCard component
-- Updated Button to support icons
+- Built Featured Projects section
+- Connected centralized project data
+- Added alternating project layout
+- Added scroll animations
+- Replaced Projects placeholder in App.jsx

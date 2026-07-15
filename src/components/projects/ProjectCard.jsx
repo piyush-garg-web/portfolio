@@ -6,9 +6,13 @@ import ProjectGallery from "./ProjectGallery";
 import ProjectTech from "./ProjectTech";
 import FeatureList from "./FeatureList";
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, reverse }) {
   return (
-    <div className="grid items-center gap-14 lg:grid-cols-2">
+   <div
+  className={`grid items-center gap-14 lg:grid-cols-2 ${
+    reverse ? "lg:[&>*:first-child]:order-2" : ""
+  }`}
+>
       <ProjectGallery cover={project.cover} />
 
       <div>
