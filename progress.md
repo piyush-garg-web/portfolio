@@ -1,9 +1,10 @@
-## Day 2 – Phase 9
+## Day 2 – Phase 10
 
 ### ✅ Completed
 
-- Added centralized navigation data
-- Created reusable Logo component
-- Built responsive glassmorphism navbar
-- Integrated sticky navigation into the application
-- Adjusted Hero spacing for fixed header
+- Created centralized portfolio data layer
+- Added About data
+- Added Skills data
+- Added Education data
+- Added Projects data
+- Standardized project image paths
