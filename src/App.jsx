@@ -8,12 +8,15 @@ import Journey from "./components/sections/Journey";
 import Contact from "./components/sections/Contact";
 import Footer from "./components/layout/Footer";
 import CustomCursor from "./components/effects/CustomCursor";
+import ScrollProgress from "./components/effects/ScrollProgress";
 
 import Section from "./components/layout/Section";
 
 function App() {
   return (
     <>
+    <ScrollProgress />
+    
       <Navbar />
 
       <CustomCursor />

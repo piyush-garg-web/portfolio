@@ -1,10 +1,8 @@
-## ✅ Phase 11.7 – Project Lightbox
+## ✅ Phase 11.8 – Scroll Progress Indicator
 
 Completed:
-- Full-screen project preview
-- Previous/Next navigation
-- Animated transitions
-- Image counter
-- Thumbnail integration
+- Animated scroll progress bar
+- Spring animation
+- Fixed top positioning
 
 Status: ✅ Completed
