@@ -1,5 +1,6 @@
 import Navbar from "./components/layout/Navbar";
 import Section from "./components/layout/Section";
+import Hero from "./components/sections/Hero";
 
 function App() {
   return (
@@ -7,11 +8,7 @@ function App() {
       <Navbar />
 
       <main>
-        <Section id="home" className="pt-40">
-          <h1 className="text-6xl font-bold">
-            Home
-          </h1>
-        </Section>
+       <Hero />
 
         <Section id="about">
           <h2 className="text-5xl font-bold">

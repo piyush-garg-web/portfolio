@@ -1,13 +1,9 @@
-## Day 1 – Phase 5
+## Day 2 – Phase 3
 
 ### ✅ Completed
 
-- Configured global CSS
-- Added design tokens
-- Added custom scrollbar
-- Built reusable Container component
-- Built reusable Section component
-- Built reusable Button component
-- Added cn utility
-
-The project foundation is now complete. All future sections will use these shared building blocks.
+- Added reusable CTA button variants
+- Added hero action buttons
+- Added coding profile social links
+- Centralized CTA labels in `personal.js`
+- Integrated `react-icons` for consistent iconography
