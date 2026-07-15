@@ -1,9 +1,10 @@
-## ✅ Phase 11.6 – Active Navigation
+## ✅ Phase 11.7 – Project Lightbox
 
 Completed:
-- Scroll spy navigation
-- Active link highlighting
-- Animated underline
-- Mobile active state
+- Full-screen project preview
+- Previous/Next navigation
+- Animated transitions
+- Image counter
+- Thumbnail integration
 
 Status: ✅ Completed
