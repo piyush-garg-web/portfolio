@@ -1,5 +1,3 @@
-import { Mail, Phone, MapPin } from "lucide-react";
-
 import contact from "../../data/contact";
 import { Mail, Phone, MapPin, Copy } from "lucide-react";
 import toast from "react-hot-toast";
