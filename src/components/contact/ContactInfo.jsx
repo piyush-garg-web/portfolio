@@ -23,11 +23,14 @@ function ContactInfo() {
     },
   ];
 
-  const copy = (text, label) => {
-  navigator.clipboard.writeText(text);
-
-  toast.success(`${label} copied`);
-};
+  const copy = async (text, label) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success(`${label} copied`);
+    } catch {
+      toast.error(`Failed to copy ${label}`);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -40,7 +43,7 @@ function ContactInfo() {
             className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl"
           >
             <div className="rounded-xl bg-violet-600/20 p-3 text-violet-400">
-              <Icon size={20} />
+              <Icon size={20} aria-hidden="true" />
             </div>
 
             <div>
@@ -51,11 +54,12 @@ function ContactInfo() {
               {item.href ? (
              <button
   onClick={() => copy(item.value, item.label)}
+  aria-label={`Copy ${item.label}`}
   className="flex items-center gap-2 text-left text-white transition hover:text-violet-400"
 >
   {item.value}
 
-  <Copy size={15} />
+  <Copy size={15} aria-hidden="true" />
 </button>
               ) : (
                 <p className="text-white">

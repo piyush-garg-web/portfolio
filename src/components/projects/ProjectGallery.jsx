@@ -13,11 +13,13 @@ function ProjectGallery({ cover, gallery }) {
       <div>
         <div
           onClick={() => setOpen(true)}
-          className="cursor-hover overflow-hidden rounded-3xl border border-white/10"
+          className="cursor-pointer overflow-hidden rounded-3xl border border-white/10"
         >
           <img
             src={images[selected]}
-            alt="Project"
+            alt="Project cover"
+            loading="lazy"
+            decoding="async"
             className="aspect-video w-full cursor-pointer object-cover transition duration-500 hover:scale-105"
           />
         </div>
@@ -25,8 +27,9 @@ function ProjectGallery({ cover, gallery }) {
         <div className="mt-4 flex flex-wrap gap-3">
           {images.map((image, index) => (
             <button
-              key={image}
+              key={index}
               onClick={() => setSelected(index)}
+              aria-label={`View screenshot ${index + 1}`}
               className={`overflow-hidden rounded-xl border-2 transition ${
                 selected === index
                   ? "border-violet-500"
@@ -35,7 +38,9 @@ function ProjectGallery({ cover, gallery }) {
             >
               <img
                 src={image}
-                alt={`Screenshot ${index + 1}`}
+                alt={`Project screenshot ${index + 1}`}
+                loading="lazy"
+                decoding="async"
                 className="h-16 w-24 object-cover"
               />
             </button>

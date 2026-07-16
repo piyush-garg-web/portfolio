@@ -11,8 +11,6 @@ import CustomCursor from "./components/effects/CustomCursor";
 import ScrollProgress from "./components/effects/ScrollProgress";
 import Loader from "./components/effects/Loader";
 
-import Section from "./components/layout/Section";
-
 function App() {
   return (
     <>

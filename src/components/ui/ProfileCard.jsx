@@ -14,6 +14,8 @@ function ProfileCard() {
         <img
           src="/assets/images/profile/profile.JPG"
           alt="Piyush Garg"
+          loading="lazy"
+          decoding="async"
           className="aspect-square w-full rounded-3xl object-cover"
         />
 

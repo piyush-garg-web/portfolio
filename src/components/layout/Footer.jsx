@@ -28,6 +28,7 @@ function Footer() {
             href={codingProfiles.github.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub"
             className="transition hover:text-violet-400"
           >
             <FaGithub />
@@ -37,6 +38,7 @@ function Footer() {
             href={codingProfiles.linkedin.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LinkedIn"
             className="transition hover:text-violet-400"
           >
             <FaLinkedin />
@@ -46,6 +48,7 @@ function Footer() {
             href={codingProfiles.leetcode.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LeetCode"
             className="transition hover:text-violet-400"
           >
             <SiLeetcode />
@@ -55,6 +58,7 @@ function Footer() {
             href={codingProfiles.gfg.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GeeksforGeeks"
             className="transition hover:text-violet-400"
           >
             <SiGeeksforgeeks />
