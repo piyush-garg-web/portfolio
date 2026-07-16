@@ -1,6 +1,10 @@
-function Badge({ children, className = "" }) {
+import { motion } from "framer-motion";
+
+function Badge({ children, className = "", ...props }) {
   return (
-    <span
+    <motion.span
+      whileHover={{ scale: 1.03, y: -2 }}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       className={`
         inline-flex
         items-center
@@ -16,9 +20,10 @@ function Badge({ children, className = "" }) {
         backdrop-blur-md
         ${className}
       `}
+      {...props}
     >
       {children}
-    </span>
+    </motion.span>
   );
 }
 

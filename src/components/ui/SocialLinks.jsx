@@ -1,9 +1,10 @@
+import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiGeeksforgeeks, SiLeetcode } from "react-icons/si";
 
 import codingProfiles from "../../data/codingProfiles";
 
-function SocialLinks({ iconSize = 24 }) {
+function SocialLinks({ iconSize = 24, ...props }) {
   const links = [
     {
       icon: <FaGithub size={iconSize} />,
@@ -31,21 +32,59 @@ function SocialLinks({ iconSize = 24 }) {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15, filter: "blur(4px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
-    <div className="flex items-center gap-6">
+    <motion.div
+      variants={containerVariants}
+      className="flex items-center gap-6"
+      {...props}
+    >
       {links.map((link) => (
-        <a
+        <motion.a
           key={link.label}
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={link.label}
-          className={`text-gray-400 transition-all duration-300 ${link.hover}`}
+          variants={itemVariants}
+          whileHover={{
+            scale: 1.15,
+            y: -3,
+          }}
+          whileTap={{ scale: 0.95 }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 15,
+          }}
+          className={`text-gray-400 transition-colors duration-300 ${link.hover}`}
         >
           {link.icon}
-        </a>
+        </motion.a>
       ))}
-    </div>
+    </motion.div>
   );
 }
 

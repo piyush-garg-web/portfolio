@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
 
 import Button from "../common/Button";
 import AnimatedBackground from "../effects/AnimatedBackground";
@@ -11,77 +12,222 @@ import SocialLinks from "../ui/SocialLinks";
 import ProfileCard from "../ui/ProfileCard";
 
 function Hero() {
+  // Capture cursor position normalized coordinates [-1, 1]
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth cursor springs for premium dampened responsiveness
+  const springX = useSpring(mouseX, { stiffness: 70, damping: 22 });
+  const springY = useSpring(mouseY, { stiffness: 70, damping: 22 });
+
+  // Monitor scroll progress to fade out the scroll indicator
+  const { scrollY } = useScroll();
+  const scrollIndicatorOpacity = useTransform(scrollY, [0, 120], [1, 0]);
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      const { clientX, clientY } = event;
+      const { innerWidth, innerHeight } = window;
+      const x = (clientX - innerWidth / 2) / (innerWidth / 2);
+      const y = (clientY - innerHeight / 2) / (innerHeight / 2);
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+
+    const handleMouseLeave = () => {
+      mouseX.set(0);
+      mouseY.set(0);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [mouseX, mouseY]);
+
+  // Transform coordinates for subtle multi-layered depth (parallax)
+  const bgParallaxX = useTransform(springX, [-1, 1], [-6, 6]);
+  const bgParallaxY = useTransform(springY, [-1, 1], [-6, 6]);
+
+  const orb1ParallaxX = useTransform(springX, [-1, 1], [-20, 20]);
+  const orb1ParallaxY = useTransform(springY, [-1, 1], [-20, 20]);
+
+  const orb2ParallaxX = useTransform(springX, [-1, 1], [20, -20]);
+  const orb2ParallaxY = useTransform(springY, [-1, 1], [20, -20]);
+
+  const textParallaxX = useTransform(springX, [-1, 1], [-4, 4]);
+  const textParallaxY = useTransform(springY, [-1, 1], [-4, 4]);
+
+  // Entrance variants for cinematic reveals
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 25, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
+  const nameVariants = {
+    hidden: {
+      opacity: 0,
+      y: 30,
+      filter: "blur(12px)",
+      letterSpacing: "-0.04em",
+      textShadow: "0 0 0px rgba(124, 58, 237, 0)",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      letterSpacing: "-0.015em",
+      textShadow: "0 0 20px rgba(124, 58, 237, 0.12)",
+      transition: {
+        duration: 0.9,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
     <section
       id="home"
       className="relative flex min-h-screen items-center overflow-hidden pt-24"
     >
-      {/* Background */}
-      <AnimatedBackground />
+      {/* Background depth layers */}
+      <AnimatedBackground parallaxX={bgParallaxX} parallaxY={bgParallaxY} />
 
       <GradientOrb
         color="bg-violet-600"
         className="-left-40 top-20 h-[350px] w-[350px]"
+        parallaxX={orb1ParallaxX}
+        parallaxY={orb1ParallaxY}
+        delay={0}
       />
 
       <GradientOrb
         color="bg-blue-600"
         className="bottom-10 right-0 h-[300px] w-[300px]"
+        parallaxX={orb2ParallaxX}
+        parallaxY={orb2ParallaxY}
+        delay={0.4}
       />
 
       {/* Content */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.8,
-          ease: "easeOut",
-        }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
         className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-20 px-6 py-24 lg:grid-cols-2 lg:px-12"
       >
-        {/* Left Column */}
-        <div>
-          <Badge>{personal.availability}</Badge>
+        {/* Left Column (Parallax Layered) */}
+        <motion.div
+          style={{ x: textParallaxX, y: textParallaxY }}
+          className="flex flex-col justify-center"
+        >
+          <Badge variants={itemVariants}>{personal.availability}</Badge>
 
-          <h1 className="mt-6 max-w-5xl text-5xl font-black leading-tight sm:text-6xl lg:text-7xl">
+          <motion.h1
+            variants={nameVariants}
+            className="mt-6 max-w-5xl text-5xl font-black leading-tight sm:text-6xl lg:text-7xl"
+          >
             {personal.name}
-          </h1>
+          </motion.h1>
 
-          <h2 className="mt-6 text-2xl font-semibold text-gray-300 sm:text-3xl">
+          <motion.h2
+            variants={itemVariants}
+            className="mt-6 text-2xl font-semibold text-gray-300 sm:text-3xl"
+          >
             {personal.role}
-          </h2>
+          </motion.h2>
 
-          <p className="mt-3 text-lg text-violet-400">
+          <motion.p
+            variants={itemVariants}
+            className="mt-3 text-lg text-violet-400 font-medium"
+          >
             {personal.tagline}
-          </p>
+          </motion.p>
 
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-gray-400">
+          <motion.p
+            variants={itemVariants}
+            className="mt-8 max-w-2xl text-lg leading-8 text-gray-400"
+          >
             {personal.description}
-          </p>
+          </motion.p>
 
           {/* CTA Buttons */}
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button href="#projects">
-              {personal.cta.primary}
-            </Button>
+          <motion.div
+            variants={itemVariants}
+            className="mt-10 flex flex-wrap gap-4"
+          >
+            <Button href="#projects">{personal.cta.primary}</Button>
 
-            <Button
-              href={personal.resume}
-              variant="secondary"
-            >
+            <Button href={personal.resume} variant="secondary">
               {personal.cta.secondary}
             </Button>
-          </div>
+          </motion.div>
 
           {/* Social Links */}
-          <div className="mt-12">
+          <motion.div variants={itemVariants} className="mt-12">
             <SocialLinks />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Right Column */}
         <div className="flex justify-center">
-          <ProfileCard />
+          <ProfileCard mouseX={springX} mouseY={springY} />
+        </div>
+      </motion.div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        style={{ opacity: scrollIndicatorOpacity }}
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 0.6, y: 0 }}
+        whileHover={{ opacity: 1, scale: 1.05 }}
+        transition={{
+          delay: 1.6,
+          duration: 0.8,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer pointer-events-auto"
+        onClick={() => {
+          document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+        }}
+      >
+        <span className="text-[10px] uppercase tracking-[0.25em] text-gray-400 font-bold">
+          Scroll
+        </span>
+        <div className="relative flex h-9 w-5 items-start justify-center rounded-full border border-white/20 p-1">
+          <motion.div
+            animate={{
+              y: [0, 8, 0],
+              opacity: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 1.6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="h-1.5 w-1 rounded-full bg-violet-400"
+          />
         </div>
       </motion.div>
     </section>

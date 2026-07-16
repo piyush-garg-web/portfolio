@@ -7,6 +7,28 @@ import SectionHeading from "../ui/SectionHeading";
 import InfoCard from "../ui/InfoCard";
 
 function About() {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
     <Section id="about">
       <SectionHeading
@@ -18,10 +40,10 @@ function About() {
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
         {/* Left */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-6"
         >
           {about.paragraphs.map((paragraph, index) => (
@@ -36,18 +58,16 @@ function About() {
 
         {/* Right */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{
-            duration: 0.6,
-            delay: 0.2,
-          }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
           className="grid gap-5 sm:grid-cols-2"
         >
           {about.highlights.map((item) => (
             <InfoCard
               key={item.title}
+              variants={itemVariants}
               title={item.title}
               value={item.value}
             />
