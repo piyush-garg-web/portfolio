@@ -65,13 +65,14 @@ function Navbar() {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {/* Decorative gradient orbs behind navbar */}
+        {/* Decorative gradient orbs behind navbar - enhanced visibility */}
         <motion.div
-          className="absolute -left-16 top-0 h-24 w-24 rounded-full bg-violet-600/30 blur-2xl pointer-events-none"
+          className="absolute -left-16 top-0 h-24 w-24 rounded-full bg-violet-600/50 blur-2xl pointer-events-none"
           style={{ x: leftOrbX }}
           animate={{
             y: [0, -4, 0],
-            opacity: [0.2, 0.35, 0.2],
+            opacity: [0.4, 0.6, 0.4],
+            scale: [1, 1.2, 1],
           }}
           transition={{
             y: {
@@ -84,14 +85,20 @@ function Navbar() {
               repeat: Infinity,
               ease: "easeInOut",
             },
+            scale: {
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
           }}
         />
         <motion.div
-          className="absolute -right-16 top-0 h-20 w-20 rounded-full bg-fuchsia-600/25 blur-2xl pointer-events-none"
+          className="absolute -right-16 top-0 h-20 w-20 rounded-full bg-fuchsia-600/45 blur-2xl pointer-events-none"
           style={{ x: rightOrbX }}
           animate={{
             y: [0, 4, 0],
-            opacity: [0.15, 0.3, 0.15],
+            opacity: [0.35, 0.55, 0.35],
+            scale: [1, 1.15, 1],
           }}
           transition={{
             y: {
@@ -101,6 +108,12 @@ function Navbar() {
               delay: 0.5,
             },
             opacity: {
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.5,
+            },
+            scale: {
               duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
@@ -125,35 +138,35 @@ function Navbar() {
           }}
           className={`mx-auto mt-4 flex max-w-7xl items-center justify-between rounded-2xl border transition-all duration-700 relative ${
             scrolled
-              ? "border-white/20 bg-black/80 px-6 py-2.5 shadow-2xl shadow-black/60 backdrop-blur-[40px]"
-              : "border-white/10 bg-black/40 px-6 py-4 backdrop-blur-2xl"
+              ? "border-white/30 bg-black/90 px-6 py-2.5 shadow-2xl shadow-black/70 backdrop-blur-[50px]"
+              : "border-white/20 bg-black/60 px-6 py-4 backdrop-blur-2xl shadow-xl shadow-black/40"
           }`}
         >
-          {/* Glass highlight */}
+          {/* Glass highlight - enhanced */}
           <motion.div
-            className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none"
+            className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none"
             style={{ x: highlightX }}
           />
-          {/* Inner light */}
+          {/* Inner light - enhanced */}
           <motion.div
-            className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/5 to-transparent pointer-events-none"
+            className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/10 to-transparent pointer-events-none"
             style={{ x: lightX, y: lightY }}
           />
-          {/* Breathing border glow */}
+          {/* Breathing border glow - stronger */}
           <motion.div
-            className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-violet-600/0 via-fuchsia-600/20 to-blue-600/0 pointer-events-none"
+            className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-violet-600/30 via-fuchsia-600/40 to-blue-600/30 pointer-events-none"
             animate={{
-              opacity: [0, 0.5, 0],
+              opacity: [0.3, 0.7, 0.3],
             }}
             transition={{
-              duration: 6,
+              duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           />
-          {/* Periodic glass shine */}
+          {/* Periodic glass shine - stronger */}
           <motion.div
-            className="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/12 to-transparent pointer-events-none"
+            className="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/20 to-transparent pointer-events-none"
             initial={{ x: "-120%" }}
             animate={{ x: "120%" }}
             transition={{

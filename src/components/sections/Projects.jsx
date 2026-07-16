@@ -5,6 +5,7 @@ import SectionHeading from "../ui/SectionHeading";
 import ProjectCard from "../projects/ProjectCard";
 
 import projects from "../../data/projects";
+import { revealVariants, viewportConfig } from "../../utils/motion";
 
 function Projects() {
   return (
@@ -19,10 +20,11 @@ function Projects() {
         {projects.map((project, index) => (
           <motion.div
             key={project.id}
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            variants={revealVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+            transition={{ delay: index * 0.15 }}
             className={
               index % 2 === 1
                 ? "lg:[&>div]:grid-flow-col-dense"

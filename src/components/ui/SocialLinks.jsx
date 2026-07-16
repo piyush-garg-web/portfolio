@@ -3,6 +3,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiGeeksforgeeks, SiLeetcode } from "react-icons/si";
 
 import codingProfiles from "../../data/codingProfiles";
+import { motionConfig } from "../../utils/motion";
 
 function SocialLinks({ iconSize = 24, ...props }) {
   const links = [
@@ -37,7 +38,7 @@ function SocialLinks({ iconSize = 24, ...props }) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: motionConfig.staggerFast,
       },
     },
   };
@@ -49,8 +50,8 @@ function SocialLinks({ iconSize = 24, ...props }) {
       y: 0,
       filter: "blur(0px)",
       transition: {
-        duration: 0.5,
-        ease: [0.16, 1, 0.3, 1],
+        duration: motionConfig.normal,
+        ease: motionConfig.ease,
       },
     },
   };
@@ -71,15 +72,14 @@ function SocialLinks({ iconSize = 24, ...props }) {
           variants={itemVariants}
           whileHover={{
             scale: 1.15,
-            y: -3,
+            y: motionConfig.hoverLiftSmall,
           }}
-          whileTap={{ scale: 0.95 }}
+          whileTap={{ scale: motionConfig.tapScale }}
           transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 15,
+            duration: motionConfig.fast,
+            ease: motionConfig.ease,
           }}
-          className={`text-gray-400 transition-colors duration-300 ${link.hover}`}
+          className={`social-icon text-gray-400 transition-colors duration-300 ${link.hover}`}
         >
           {link.icon}
         </motion.a>

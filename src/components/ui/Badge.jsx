@@ -1,10 +1,18 @@
 import { motion } from "framer-motion";
+import { motionConfig } from "../../utils/motion";
 
 function Badge({ children, className = "", ...props }) {
   return (
     <motion.span
-      whileHover={{ scale: 1.03, y: -2 }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{
+        scale: 1.05,
+        y: motionConfig.hoverLiftSmall,
+        borderColor: "rgba(139, 92, 246, 0.4)",
+        backgroundColor: "rgba(139, 92, 246, 0.15)",
+        boxShadow: "0 4px 12px rgba(124, 58, 237, 0.15)",
+      }}
+      whileTap={{ scale: motionConfig.tapScale }}
+      transition={{ duration: motionConfig.fast, ease: motionConfig.ease }}
       className={`
         inline-flex
         items-center
@@ -18,6 +26,7 @@ function Badge({ children, className = "", ...props }) {
         font-medium
         text-violet-300
         backdrop-blur-md
+        cursor-default
         ${className}
       `}
       {...props}

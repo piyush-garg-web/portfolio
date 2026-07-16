@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { motionConfig } from "../../utils/motion";
 
 function Loader() {
   const [loading, setLoading] = useState(true);
@@ -7,7 +8,7 @@ function Loader() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1800);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -19,18 +20,18 @@ function Loader() {
           className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#030712]"
           initial={{ y: 0 }}
           exit={{ y: "-100%" }}
-          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1, ease: motionConfig.ease }}
         >
           <motion.h1
-            initial={{ scale: 0.8, opacity: 0, filter: "blur(8px)" }}
+            initial={{ scale: 0.8, opacity: 0, filter: "blur(12px)" }}
             animate={{
               scale: 1,
               opacity: 1,
               filter: "blur(0px)",
             }}
             transition={{
-              duration: 0.7,
-              ease: [0.16, 1, 0.3, 1],
+              duration: motionConfig.slow,
+              ease: motionConfig.ease,
             }}
             className="text-6xl font-black tracking-wider text-white"
           >
@@ -41,9 +42,9 @@ function Loader() {
             initial={{ width: 0 }}
             animate={{ width: 160 }}
             transition={{
-              duration: 1.1,
-              ease: [0.16, 1, 0.3, 1],
-              delay: 0.2,
+              duration: motionConfig.slow,
+              ease: motionConfig.ease,
+              delay: 0.3,
             }}
             className="mt-8 h-1 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500"
           />
@@ -52,9 +53,9 @@ function Loader() {
             initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
             animate={{ opacity: 0.6, y: 0, filter: "blur(0px)" }}
             transition={{
-              duration: 0.6,
-              ease: [0.16, 1, 0.3, 1],
-              delay: 0.4,
+              duration: motionConfig.normal,
+              ease: motionConfig.ease,
+              delay: 0.5,
             }}
             className="mt-6 text-sm uppercase tracking-[0.35em] text-gray-400"
           >

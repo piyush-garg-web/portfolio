@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
 
 import Button from "../common/Button";
@@ -10,8 +10,34 @@ import personal from "../../data/personal";
 import Badge from "../ui/Badge";
 import SocialLinks from "../ui/SocialLinks";
 import ProfileCard from "../ui/ProfileCard";
+import { motionConfig, parallaxMax } from "../../utils/motion";
 
 function Hero() {
+  const [typedName, setTypedName] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [charIndex, setCharIndex] = useState(0);
+
+  // Typing animation effect
+  useEffect(() => {
+    const fullName = personal.name;
+    
+    const typing = setTimeout(() => {
+      if (!isDeleting && charIndex < fullName.length) {
+        setTypedName(fullName.slice(0, charIndex + 1));
+        setCharIndex(charIndex + 1);
+      } else if (isDeleting && charIndex > 0) {
+        setTypedName(fullName.slice(0, charIndex - 1));
+        setCharIndex(charIndex - 1);
+      } else if (charIndex === fullName.length && !isDeleting) {
+        setIsDeleting(true);
+        setTimeout(() => setIsDeleting(false), 2000); // Pause before deleting
+      } else if (charIndex === 0 && isDeleting) {
+        setIsDeleting(false);
+      }
+    }, isDeleting ? 100 : 150); // Typing speed
+
+    return () => clearTimeout(typing);
+  }, [charIndex, isDeleting, personal.name]);
   // Capture cursor position normalized coordinates [-1, 1]
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -48,9 +74,9 @@ function Hero() {
     };
   }, [mouseX, mouseY]);
 
-  // Transform coordinates for subtle multi-layered depth (parallax)
-  const bgParallaxX = useTransform(springX, [-1, 1], [-6, 6]);
-  const bgParallaxY = useTransform(springY, [-1, 1], [-6, 6]);
+  // Transform coordinates for subtle multi-layered depth (parallax - max 10px)
+  const bgParallaxX = useTransform(springX, [-1, 1], [-parallaxMax, parallaxMax]);
+  const bgParallaxY = useTransform(springY, [-1, 1], [-parallaxMax, parallaxMax]);
 
   const orb1ParallaxX = useTransform(springX, [-1, 1], [-20, 20]);
   const orb1ParallaxY = useTransform(springY, [-1, 1], [-20, 20]);
@@ -66,7 +92,7 @@ function Hero() {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.12,
+        staggerChildren: motionConfig.staggerNormal,
         delayChildren: 0.1,
       },
     },
@@ -79,8 +105,8 @@ function Hero() {
       y: 0,
       filter: "blur(0px)",
       transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1],
+        duration: motionConfig.slow,
+        ease: motionConfig.ease,
       },
     },
   };
@@ -98,10 +124,10 @@ function Hero() {
       y: 0,
       filter: "blur(0px)",
       letterSpacing: "-0.015em",
-      textShadow: "0 0 20px rgba(124, 58, 237, 0.12)",
+      textShadow: "0 0 30px rgba(124, 58, 237, 0.15)",
       transition: {
-        duration: 0.9,
-        ease: [0.16, 1, 0.3, 1],
+        duration: motionConfig.slow,
+        ease: motionConfig.ease,
       },
     },
   };
@@ -148,7 +174,12 @@ function Hero() {
             variants={nameVariants}
             className="mt-6 max-w-5xl text-5xl font-black leading-tight sm:text-6xl lg:text-7xl"
           >
-            {personal.name}
+            {typedName}
+            <motion.span
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ duration: 0.8, repeat: Infinity }}
+              className="inline-block w-1 h-12 ml-2 bg-violet-400 align-middle"
+            />
           </motion.h1>
 
           <motion.h2
@@ -204,8 +235,8 @@ function Hero() {
         whileHover={{ opacity: 1, scale: 1.05 }}
         transition={{
           delay: 1.6,
-          duration: 0.8,
-          ease: [0.16, 1, 0.3, 1],
+          duration: motionConfig.slow,
+          ease: motionConfig.ease,
         }}
         className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer pointer-events-auto"
         onClick={() => {

@@ -8,15 +8,16 @@ import journey from "../../data/journey";
 import JourneyCard from "../journey/JourneyCard";
 import TimelineDot from "../journey/TimelineDot";
 import TimelineLine from "../journey/TimelineLine";
+import { revealVariants, viewportConfig } from "../../utils/motion";
 
 function Journey() {
   return (
     <Section id="journey">
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        variants={revealVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
         className="flex flex-col items-center text-center"
       >
         <SectionHeading
@@ -33,17 +34,25 @@ function Journey() {
 
         <div className="space-y-20">
           {journey.map((item, index) => (
-            <div
+            <motion.div
               key={item.title}
-              className="relative flex items-center justify-center"
+              variants={revealVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportConfig}
+              transition={{ delay: index * 0.1 }}
+              className="relative flex items-center lg:justify-start"
             >
-              <TimelineDot />
+              {/* Timeline dot positioned to align with cards */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 lg:left-0 lg:translate-x-0">
+                <TimelineDot />
+              </div>
 
               <JourneyCard
                 item={item}
                 reverse={index % 2 !== 0}
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

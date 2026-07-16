@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
 
 import Hero from "./components/sections/Hero";
@@ -10,6 +11,7 @@ import Footer from "./components/layout/Footer";
 import CustomCursor from "./components/effects/CustomCursor";
 import ScrollProgress from "./components/effects/ScrollProgress";
 import Loader from "./components/effects/Loader";
+import { motionConfig } from "./utils/motion";
 
 function App() {
   return (
@@ -21,7 +23,11 @@ function App() {
 
       <CustomCursor />
 
-      <main>
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: motionConfig.slow, ease: motionConfig.ease, delay: 1.8 }}
+      >
         <Hero />
 
         <About />
@@ -33,7 +39,7 @@ function App() {
         <Journey />
 
        <Contact />
-      </main>
+      </motion.main>
       <Footer />
     </>
   );

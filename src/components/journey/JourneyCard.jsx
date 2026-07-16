@@ -1,45 +1,39 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { motionConfig, slideLeftVariants, slideRightVariants } from "../../utils/motion";
 
 function JourneyCard({ item, reverse }) {
   const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        x: reverse ? 60 : -60,
-        filter: "blur(8px)",
-      }}
-      whileInView={{
-        opacity: 1,
-        x: 0,
-        filter: "blur(0px)",
-      }}
+      variants={reverse ? slideRightVariants : slideLeftVariants}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={`w-full lg:w-[45%] ${
-        reverse ? "lg:ml-auto" : ""
+        reverse ? "lg:ml-auto lg:mr-0" : "lg:ml-0 lg:mr-auto"
       }`}
     >
       <motion.div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         whileHover={{
-          y: -6,
-          scale: 1.015,
-          borderColor: "rgba(139, 92, 246, 0.35)",
-          backgroundColor: "rgba(139, 92, 246, 0.06)",
+          y: motionConfig.hoverLift,
+          scale: motionConfig.hoverScale,
+          borderColor: "rgba(139, 92, 246, 0.4)",
+          backgroundColor: "rgba(139, 92, 246, 0.08)",
+          boxShadow: "0 20px 40px rgba(124, 58, 237, 0.15)",
         }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition-shadow duration-300 hover:shadow-[0_15px_30px_rgba(124,58,237,0.1)] cursor-default"
+        transition={{ duration: motionConfig.normal, ease: motionConfig.ease }}
+        className="interactive-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition-shadow duration-300 cursor-default"
       >
         {/* Glass reflection sheen sweep */}
         <motion.div
           initial={{ x: "-150%" }}
           animate={hovered ? { x: "150%" } : { x: "-150%" }}
-          transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 -z-5 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none transform -skew-x-12"
+          transition={{ duration: 1.0, ease: motionConfig.ease }}
+          className="absolute inset-0 -z-5 bg-gradient-to-r from-transparent via-white/12 to-transparent pointer-events-none transform -skew-x-12"
         />
 
         <p className="text-sm font-semibold text-violet-400">

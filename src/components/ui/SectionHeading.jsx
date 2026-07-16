@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
+import { motionConfig, viewportConfig } from "../../utils/motion";
 
 function SectionHeading({ eyebrow, title, description }) {
   const containerVariants = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: motionConfig.staggerFast,
       },
     },
   };
@@ -16,7 +17,7 @@ function SectionHeading({ eyebrow, title, description }) {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
-      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: motionConfig.normal, ease: motionConfig.ease },
     },
   };
 
@@ -25,7 +26,7 @@ function SectionHeading({ eyebrow, title, description }) {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={viewportConfig}
       className="mb-16 max-w-3xl"
     >
       <motion.p

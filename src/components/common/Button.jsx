@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { motionConfig } from "../../utils/motion";
 
 function Button({
   children,
@@ -19,8 +20,8 @@ function Button({
     const handleMouseMove = (e) => {
       if (!ref.current) return;
       const rect = ref.current.getBoundingClientRect();
-      const x = (e.clientX - (rect.left + rect.width / 2)) * 0.15;
-      const y = (e.clientY - (rect.top + rect.height / 2)) * 0.15;
+      const x = (e.clientX - (rect.left + rect.width / 2)) * 0.12;
+      const y = (e.clientY - (rect.top + rect.height / 2)) * 0.12;
       setPosition({ x, y });
     };
 
@@ -42,11 +43,11 @@ function Button({
     };
   }, []);
 
-  // Periodic shine every 8-10 seconds
+  // Periodic shine every 10 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setShineKey((prev) => prev + 1);
-    }, 9000);
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -55,10 +56,10 @@ function Button({
 
   const variants = {
     primary:
-      "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-md shadow-violet-600/20 hover:shadow-lg hover:shadow-violet-600/40",
+      "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-600/25 hover:shadow-xl hover:shadow-violet-600/40",
 
     secondary:
-      "border border-white/10 bg-white/5 text-white backdrop-blur-xl hover:bg-white/10 hover:border-white/20",
+      "border border-white/10 bg-white/5 text-white backdrop-blur-xl hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-violet-600/10",
   };
 
   const content = (
@@ -75,31 +76,38 @@ function Button({
       <motion.div
         animate={
           hovered
-            ? { scale: 1.04, y: -3 }
+            ? { scale: 1.03, y: motionConfig.hoverLiftSmall }
             : variant === "primary"
-            ? { scale: [1, 1.015, 1], y: 0 }
+            ? { scale: [1, 1.01, 1], y: 0 }
             : { scale: 1, y: 0 }
         }
-        whileTap={{ scale: 0.96 }}
+        whileTap={{ scale: motionConfig.tapScale }}
         transition={
           hovered
-            ? { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+            ? { duration: motionConfig.normal, ease: motionConfig.ease }
             : variant === "primary"
             ? {
                 scale: {
                   repeat: Infinity,
-                  duration: 4.5,
+                  duration: 5,
                   ease: "easeInOut",
                 },
-                y: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+                y: { duration: motionConfig.normal, ease: motionConfig.ease },
               }
-            : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+            : { duration: motionConfig.normal, ease: motionConfig.ease }
         }
         className={`${baseClasses} ${variants[variant]} ${className}`}
       >
         {/* Glow effect on hover */}
         {variant === "primary" && (
-          <div className="absolute inset-0 rounded-xl bg-violet-500/0 transition-colors duration-300 group-hover:bg-violet-500/20 blur-xl -z-10" />
+          <motion.div
+            animate={{
+              opacity: hovered ? 0.3 : 0,
+              scale: hovered ? 1.2 : 1,
+            }}
+            transition={{ duration: motionConfig.normal, ease: motionConfig.ease }}
+            className="absolute inset-0 rounded-xl bg-violet-500 blur-xl -z-10"
+          />
         )}
 
         {/* Periodic shine + hover shine */}
@@ -110,15 +118,15 @@ function Button({
             animate={{ x: "200%" }}
             transition={
               hovered
-                ? { duration: 0.9, ease: [0.16, 1, 0.3, 1] }
+                ? { duration: 0.8, ease: motionConfig.ease }
                 : {
-                    duration: 1.2,
+                    duration: 1.5,
                     ease: "easeInOut",
                     repeat: Infinity,
-                    repeatDelay: 7.8,
+                    repeatDelay: 8.5,
                   }
             }
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none"
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none"
           />
         )}
 

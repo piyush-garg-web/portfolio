@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import navigation from "../../data/navigation";
 import useActiveSection from "../../hooks/useActiveSection";
+import { motionConfig } from "../../utils/motion";
 
 function MobileMenu({ open, setOpen }) {
   const activeSection = useActiveSection();
@@ -41,7 +42,7 @@ function MobileMenu({ open, setOpen }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: motionConfig.normal, ease: motionConfig.ease }}
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
@@ -51,7 +52,7 @@ function MobileMenu({ open, setOpen }) {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: motionConfig.slow, ease: motionConfig.ease }}
             className="fixed right-0 top-0 z-50 h-screen w-72 border-l border-white/15 bg-[#09090b] p-8 shadow-2xl lg:hidden"
             role="dialog"
             aria-modal="true"
@@ -71,11 +72,12 @@ function MobileMenu({ open, setOpen }) {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 30 }}
                     transition={{
-                      duration: 0.4,
-                      delay: 0.08 * index,
-                      ease: [0.22, 1, 0.36, 1],
+                      duration: motionConfig.normal,
+                      delay: motionConfig.staggerFast * index,
+                      ease: motionConfig.ease,
                     }}
                     whileHover={{ x: 4 }}
+                    whileTap={{ scale: motionConfig.tapScale }}
                     className={`relative w-fit text-xl font-medium transition-colors duration-300 ${
                       active
                         ? "text-violet-300"

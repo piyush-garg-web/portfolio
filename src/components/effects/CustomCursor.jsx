@@ -1,48 +1,75 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 function CustomCursor() {
   const [hovered, setHovered] = useState(false);
-  const [clicked, setClicked] = useState(false);
+  const [trail, setTrail] = useState([]);
+  const trailRef = useRef([]);
+  const requestRef = useRef(null);
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  // Springs for the dual-circle cursor
-  const dotX = useSpring(mouseX, { stiffness: 1000, damping: 50 });
-  const dotY = useSpring(mouseY, { stiffness: 1000, damping: 50 });
+  // Premium smooth spring for liquid feel
+  const cursorX = useSpring(mouseX, { stiffness: 120, damping: 20 });
+  const cursorY = useSpring(mouseY, { stiffness: 120, damping: 20 });
 
-  const ringX = useSpring(mouseX, { stiffness: 300, damping: 28 });
-  const ringY = useSpring(mouseY, { stiffness: 300, damping: 28 });
+  // Trail creation - beautiful glowing particles
+  const updateTrail = (x, y) => {
+    const particle = {
+      id: Math.random(),
+      x,
+      y,
+      opacity: 0.7,
+      scale: 1,
+    };
+
+    trailRef.current = [...trailRef.current, particle].slice(-8); // Keep 8 for elegant trail
+    setTrail(trailRef.current);
+  };
+
+  // Animate trail particles with GPU acceleration
+  useEffect(() => {
+    const animateTrail = () => {
+      trailRef.current = trailRef.current
+        .map(p => ({
+          ...p,
+          opacity: p.opacity - 0.12, // Quick fade
+          scale: p.scale - 0.15, // Shrink while fading
+        }))
+        .filter(p => p.opacity > 0);
+
+      setTrail(trailRef.current);
+      requestRef.current = requestAnimationFrame(animateTrail);
+    };
+
+    requestRef.current = requestAnimationFrame(animateTrail);
+    return () => cancelAnimationFrame(requestRef.current);
+  }, []);
 
   useEffect(() => {
-    if ("ontouchstart" in window) return;
+    // Respect prefers-reduced-motion
+    if ("ontouchstart" in window || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let lastX = -100;
+    let lastY = -100;
 
     const move = (e) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
+      
+      // Only add trail when cursor actually moves (performance)
+      const distance = Math.sqrt(Math.pow(e.clientX - lastX, 2) + Math.pow(e.clientY - lastY, 2));
+      if (distance > 4) {
+        updateTrail(e.clientX, e.clientY);
+        lastX = e.clientX;
+        lastY = e.clientY;
+      }
     };
 
-    const handleMouseDown = () => setClicked(true);
-    const handleMouseUp = () => setClicked(false);
-
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
-
-    // Track links, buttons, and custom hovers
-    let activeListeners = [];
-
     const updateHoverTargets = () => {
-      // Remove old listeners
-      activeListeners.forEach(({ el, enter, leave }) => {
-        el.removeEventListener("mouseenter", enter);
-        el.removeEventListener("mouseleave", leave);
-      });
-      activeListeners = [];
-
       const elements = document.querySelectorAll(
-        "a, button, [role='button'], .cursor-hover, input, textarea"
+        "a, button, [role='button'], .cursor-hover, input, textarea, .interactive-card, .project-image, .social-icon, .profile-image"
       );
 
       const enter = () => setHovered(true);
@@ -51,60 +78,76 @@ function CustomCursor() {
       elements.forEach((el) => {
         el.addEventListener("mouseenter", enter);
         el.addEventListener("mouseleave", leave);
-        activeListeners.push({ el, enter, leave });
       });
     };
 
-    // Run targets update immediately
+    window.addEventListener("mousemove", move);
     updateHoverTargets();
 
-    // Re-check target links when DOM updates
     const observer = new MutationObserver(updateHoverTargets);
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       window.removeEventListener("mousemove", move);
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseUp);
-      activeListeners.forEach(({ el, enter, leave }) => {
-        el.removeEventListener("mouseenter", enter);
-        el.removeEventListener("mouseleave", leave);
-      });
       observer.disconnect();
     };
   }, [mouseX, mouseY]);
 
-  if ("ontouchstart" in window) return null;
+  // Disable cursor on touch devices or reduced motion
+  if ("ontouchstart" in window || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
 
   return (
     <>
-      {/* Inner Dot */}
+      {/* Beautiful glowing trail - light streak effect */}
+      {trail.map((particle, index) => (
+        <motion.div
+          key={particle.id}
+          className="pointer-events-none fixed left-0 top-0 z-[9997] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            x: particle.x,
+            y: particle.y,
+            opacity: particle.opacity * (1 - index / trail.length),
+            scale: particle.scale * (1 - index / trail.length * 0.4),
+            background: `radial-gradient(circle, rgba(139, 92, 246, ${particle.opacity * 0.9}) 0%, rgba(124, 58, 237, ${particle.opacity * 0.5}) 40%, transparent 70%)`,
+            boxShadow: `
+              0 0 ${15 * particle.opacity}px rgba(139, 92, 246, ${particle.opacity * 0.7}),
+              0 0 ${30 * particle.opacity}px rgba(124, 58, 237, ${particle.opacity * 0.4}),
+              0 0 ${50 * particle.opacity}px rgba(167, 139, 250, ${particle.opacity * 0.2})
+            `,
+          }}
+          transition={{ duration: 0 }}
+        />
+      ))}
+
+      {/* Subtle cursor spotlight - very low opacity */}
       <motion.div
-        className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-400 mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[9996] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
-          x: dotX,
-          y: dotY,
-          scale: hovered ? 0.5 : 1,
+          x: cursorX,
+          y: cursorY,
+          width: 350,
+          height: 350,
+          background: "radial-gradient(circle, rgba(139, 92, 246, 0.02) 0%, transparent 65%)",
         }}
-        transition={{ type: "spring", stiffness: 500, damping: 30 }}
       />
 
-      {/* Outer Ring */}
+      {/* Main cursor - single small glowing violet dot */}
       <motion.div
-        className="pointer-events-none fixed left-0 top-0 z-[9998] -translate-x-1/2 -translate-y-1/2 rounded-full border border-violet-400 mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-400"
         style={{
-          x: ringX,
-          y: ringY,
-          width: hovered ? 52 : 30,
-          height: hovered ? 52 : 30,
-          backgroundColor: hovered ? "rgba(139, 92, 246, 0.15)" : "rgba(139, 92, 246, 0)",
-          scale: clicked ? 0.85 : 1,
+          x: cursorX,
+          y: cursorY,
+          boxShadow: hovered
+            ? "0 0 20px rgba(139, 92, 246, 0.9), 0 0 40px rgba(124, 58, 237, 0.6), 0 0 60px rgba(139, 92, 246, 0.3)"
+            : "0 0 12px rgba(139, 92, 246, 0.7), 0 0 24px rgba(124, 58, 237, 0.4), 0 0 36px rgba(139, 92, 246, 0.2)",
+        }}
+        animate={{
+          width: hovered ? 8 : 6,
+          height: hovered ? 8 : 6,
         }}
         transition={{
-          width: { type: "spring", stiffness: 300, damping: 25 },
-          height: { type: "spring", stiffness: 300, damping: 25 },
-          backgroundColor: { duration: 0.2 },
-          scale: { type: "spring", stiffness: 500, damping: 15 },
+          width: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+          height: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
         }}
       />
     </>

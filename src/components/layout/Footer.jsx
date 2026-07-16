@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import {
   FaGithub,
   FaLinkedin,
@@ -10,71 +11,126 @@ import {
 
 import personal from "../../data/personal";
 import codingProfiles from "../../data/codingProfiles";
+import { motionConfig } from "../../utils/motion";
 
 function Footer() {
   return (
     <footer className="border-t border-white/10 py-12">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 text-center">
-        <h3 className="text-3xl font-black">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: motionConfig.slow, ease: motionConfig.ease }}
+        className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 text-center"
+      >
+        <motion.h3
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: motionConfig.normal, ease: motionConfig.ease, delay: 0.1 }}
+          className="text-3xl font-black"
+        >
           {personal.name}
-        </h3>
+        </motion.h3>
 
-        <p className="text-gray-400">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: motionConfig.normal, ease: motionConfig.ease, delay: 0.2 }}
+          className="text-gray-400"
+        >
           {personal.role}
-        </p>
+        </motion.p>
 
-        <div className="flex gap-6 text-2xl">
-          <a
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: motionConfig.normal, ease: motionConfig.ease, delay: 0.3 }}
+          className="flex gap-6 text-2xl"
+        >
+          <motion.a
             href={codingProfiles.github.url}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="transition hover:text-violet-400"
+            whileHover={{ y: -3, scale: 1.1 }}
+            whileTap={{ scale: motionConfig.tapScale }}
+            transition={{ duration: motionConfig.fast, ease: motionConfig.ease }}
+            className="social-icon transition hover:text-violet-400"
           >
             <FaGithub />
-          </a>
+          </motion.a>
 
-          <a
+          <motion.a
             href={codingProfiles.linkedin.url}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className="transition hover:text-violet-400"
+            whileHover={{ y: -3, scale: 1.1 }}
+            whileTap={{ scale: motionConfig.tapScale }}
+            transition={{ duration: motionConfig.fast, ease: motionConfig.ease }}
+            className="social-icon transition hover:text-violet-400"
           >
             <FaLinkedin />
-          </a>
+          </motion.a>
 
-          <a
+          <motion.a
             href={codingProfiles.leetcode.url}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LeetCode"
-            className="transition hover:text-violet-400"
+            whileHover={{ y: -3, scale: 1.1 }}
+            whileTap={{ scale: motionConfig.tapScale }}
+            transition={{ duration: motionConfig.fast, ease: motionConfig.ease }}
+            className="social-icon transition hover:text-violet-400"
           >
             <SiLeetcode />
-          </a>
+          </motion.a>
 
-          <a
+          <motion.a
             href={codingProfiles.gfg.url}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GeeksforGeeks"
-            className="transition hover:text-violet-400"
+            whileHover={{ y: -3, scale: 1.1 }}
+            whileTap={{ scale: motionConfig.tapScale }}
+            transition={{ duration: motionConfig.fast, ease: motionConfig.ease }}
+            className="social-icon transition hover:text-violet-400"
           >
             <SiGeeksforgeeks />
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
 
-        <div className="h-px w-full max-w-md bg-white/10" />
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: motionConfig.normal, ease: motionConfig.ease, delay: 0.4 }}
+          className="h-px w-full max-w-md bg-white/10"
+        />
 
-        <p className="text-sm text-gray-500">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: motionConfig.normal, ease: motionConfig.ease, delay: 0.5 }}
+          className="text-sm text-gray-500"
+        >
           © 2026 Piyush Garg. All rights reserved.
-        </p>
+        </motion.p>
 
-        <p className="text-sm text-gray-500">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: motionConfig.normal, ease: motionConfig.ease, delay: 0.6 }}
+          className="text-sm text-gray-500"
+        >
           Built with React, Vite, Tailwind CSS & Framer Motion
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     </footer>
   );
 }
