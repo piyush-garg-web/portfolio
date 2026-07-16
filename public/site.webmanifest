@@ -1,0 +1,15 @@
+{
+  "name": "Piyush Garg Portfolio",
+  "short_name": "Piyush",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#7c3aed",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
