@@ -141,10 +141,10 @@ function Navbar() {
             initial={{ x: "-120%" }}
             animate={{ x: "120%" }}
             transition={{
-              duration: 1.2,
+              duration: 3,
               ease: "easeInOut",
               repeat: Infinity,
-              repeatDelay: 0.8,
+              repeatDelay: 5,
             }}
           />
 
