@@ -33,7 +33,7 @@ function JourneyCard({ item, reverse, index }) {
       variants={reverse ? slideRightVariants : slideLeftVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-40px" }}
       className="relative grid grid-cols-[32px_minmax(0,1fr)] items-center gap-4 md:grid-cols-[minmax(0,1fr)_40px_minmax(0,1fr)] md:gap-8"
     >
       <div className={`hidden md:block ${reverse ? "order-3" : "order-1"}`} />
@@ -46,7 +46,7 @@ function JourneyCard({ item, reverse, index }) {
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
           whileInView={{ opacity: 1, scaleX: 1 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: motionConfig.normal, ease: motionConfig.ease, delay: 0.15 + index * 0.05 }}
           className={`absolute top-1/2 hidden h-px w-8 md:block ${
             reverse

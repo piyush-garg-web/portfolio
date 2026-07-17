@@ -24,9 +24,9 @@ function App() {
       <CustomCursor />
 
       <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: motionConfig.slow, ease: motionConfig.ease, delay: 1.8 }}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: motionConfig.slow, ease: motionConfig.ease, delay: 1 }}
       >
         <Hero />
 

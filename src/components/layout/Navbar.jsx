@@ -134,7 +134,7 @@ function Navbar() {
           transition={{
             duration: 0.8,
             ease: [0.22, 1, 0.36, 1],
-            delay: 0.15,
+            delay: 1,
             scale: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
           }}
           className={`mx-auto mt-4 flex max-w-7xl items-center justify-between rounded-2xl border transition-all duration-700 relative overflow-hidden ${

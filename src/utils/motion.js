@@ -176,7 +176,7 @@ export const glowHover = {
 // Default viewport for scroll-triggered animations
 export const viewportConfig = {
   once: true,
-  margin: "-100px",
+  margin: "-40px",
 };
 
 // Parallax max movement (10px as specified)
