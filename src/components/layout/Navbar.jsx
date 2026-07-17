@@ -65,56 +65,56 @@ function Navbar() {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {/* Decorative gradient orbs behind navbar - enhanced visibility */}
+        {/* Ambient lighting behind navbar */}
         <motion.div
-          className="absolute -left-16 top-0 h-24 w-24 rounded-full bg-violet-600/50 blur-2xl pointer-events-none"
+          className="absolute -left-20 top-0 h-32 w-32 rounded-full bg-violet-600/30 blur-3xl pointer-events-none"
           style={{ x: leftOrbX }}
           animate={{
-            y: [0, -4, 0],
-            opacity: [0.4, 0.6, 0.4],
+            y: [0, -6, 0],
+            opacity: [0.25, 0.4, 0.25],
             scale: [1, 1.2, 1],
           }}
           transition={{
             y: {
-              duration: 4,
+              duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
             },
             opacity: {
-              duration: 4,
+              duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
             },
             scale: {
-              duration: 4,
+              duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
             },
           }}
         />
         <motion.div
-          className="absolute -right-16 top-0 h-20 w-20 rounded-full bg-fuchsia-600/45 blur-2xl pointer-events-none"
+          className="absolute -right-20 top-0 h-28 w-28 rounded-full bg-fuchsia-600/25 blur-3xl pointer-events-none"
           style={{ x: rightOrbX }}
           animate={{
-            y: [0, 4, 0],
-            opacity: [0.35, 0.55, 0.35],
+            y: [0, 6, 0],
+            opacity: [0.2, 0.35, 0.2],
             scale: [1, 1.15, 1],
           }}
           transition={{
             y: {
-              duration: 5,
+              duration: 6,
               repeat: Infinity,
               ease: "easeInOut",
               delay: 0.5,
             },
             opacity: {
-              duration: 5,
+              duration: 6,
               repeat: Infinity,
               ease: "easeInOut",
               delay: 0.5,
             },
             scale: {
-              duration: 5,
+              duration: 6,
               repeat: Infinity,
               ease: "easeInOut",
               delay: 0.5,
@@ -136,44 +136,65 @@ function Navbar() {
             delay: 0.15,
             scale: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
           }}
-          className={`mx-auto mt-4 flex max-w-7xl items-center justify-between rounded-2xl border transition-all duration-700 relative ${
+          className={`mx-auto mt-4 flex max-w-7xl items-center justify-between rounded-2xl border transition-all duration-700 relative overflow-hidden ${
             scrolled
-              ? "border-white/30 bg-black/90 px-6 py-2.5 shadow-2xl shadow-black/70 backdrop-blur-[50px]"
-              : "border-white/20 bg-black/60 px-6 py-4 backdrop-blur-2xl shadow-xl shadow-black/40"
+              ? "border-white/30 bg-black/90 px-6 py-2.5 shadow-2xl shadow-black/70 backdrop-blur-[60px]"
+              : "border-white/20 bg-black/60 px-6 py-4 backdrop-blur-3xl shadow-2xl shadow-black/50"
           }`}
         >
-          {/* Glass highlight - enhanced */}
+          {/* Animated gradient glow inside navbar */}
           <motion.div
-            className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none"
-            style={{ x: highlightX }}
-          />
-          {/* Inner light - enhanced */}
-          <motion.div
-            className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/10 to-transparent pointer-events-none"
-            style={{ x: lightX, y: lightY }}
-          />
-          {/* Breathing border glow - stronger */}
-          <motion.div
-            className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-violet-600/30 via-fuchsia-600/40 to-blue-600/30 pointer-events-none"
+            className="absolute inset-0 bg-gradient-to-r from-violet-600/10 via-fuchsia-600/10 to-blue-600/10 pointer-events-none"
             animate={{
-              opacity: [0.3, 0.7, 0.3],
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             }}
             transition={{
-              duration: 5,
+              duration: 8,
               repeat: Infinity,
               ease: "easeInOut",
             }}
+            style={{
+              backgroundSize: "200% 200%",
+            }}
           />
-          {/* Periodic glass shine - stronger */}
+          {/* Glass highlight */}
           <motion.div
-            className="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/20 to-transparent pointer-events-none"
+            className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none"
+            style={{ x: highlightX }}
+          />
+          {/* Inner light */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/15 to-transparent pointer-events-none"
+            style={{ x: lightX, y: lightY }}
+          />
+          {/* Moving border glow */}
+          <motion.div
+            className="absolute -inset-[2px] rounded-2xl pointer-events-none"
+            style={{
+              background:
+                "conic-gradient(from 0deg, transparent 0deg, #8b5cf6 90deg, transparent 180deg, #d946ef 270deg, transparent 360deg)",
+              opacity: 0.3,
+            }}
+            animate={{
+              rotate: 360,
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+          <div className="absolute inset-[2px] rounded-2xl bg-black/70 pointer-events-none" />
+          {/* Periodic glass shine */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl bg-gradient-to-br from-transparent via-white/25 to-transparent pointer-events-none"
             initial={{ x: "-120%" }}
             animate={{ x: "120%" }}
             transition={{
-              duration: 3,
+              duration: 4,
               ease: "easeInOut",
               repeat: Infinity,
-              repeatDelay: 5,
+              repeatDelay: 6,
             }}
           />
 
@@ -190,23 +211,22 @@ function Navbar() {
                   <li key={item.href} className="relative">
                     <motion.a
                       href={item.href}
-                      className={`relative z-10 pb-1 text-sm font-medium transition-colors duration-300 ${
+                      className={`relative z-10 px-3 py-1.5 text-sm font-medium transition-colors duration-300 rounded-full ${
                         active
-                          ? "text-violet-300"
+                          ? "text-violet-200"
                           : "text-gray-300 hover:text-white"
                       }`}
-                      whileHover={{ y: -3, scale: 1.03, z: 10 }}
+                      whileHover={{ y: -4, scale: 1.04 }}
                       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                     >
                       {item.name}
                       {/* Subtle text glow on hover */}
                       {active && (
                         <motion.span
-                          className="absolute -bottom-0.5 left-0 right-0 h-[2px] bg-gradient-to-r from-violet-500 via-fuchsia-500 to-blue-500 blur-sm"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.2, 1] }}
+                          className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-500/40 via-fuchsia-500/30 to-blue-500/40 blur-md pointer-events-none"
+                          animate={{ opacity: [0.5, 0.8, 0.5] }}
                           transition={{
-                            duration: 2.5,
+                            duration: 3,
                             repeat: Infinity,
                             ease: "easeInOut",
                           }}
@@ -214,11 +234,11 @@ function Navbar() {
                       )}
                     </motion.a>
 
-                    {/* Active indicator with layout animation */}
+                    {/* Active pill indicator with layout animation */}
                     {active && (
                       <motion.div
                         layoutId="navbar-active-indicator"
-                        className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-blue-500"
+                        className="absolute -z-0 -inset-1 rounded-full bg-gradient-to-r from-violet-600/20 via-fuchsia-600/15 to-blue-600/20 backdrop-blur-sm border border-violet-500/30"
                         transition={{
                           type: "spring",
                           stiffness: 400,

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 import ProjectLightbox from "./ProjectLightbox";
 import { motionConfig, scaleRevealVariants, staggerContainerVariants, viewportConfig } from "../../utils/motion";
@@ -10,6 +10,27 @@ function ProjectGallery({ cover, gallery }) {
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const ref = useRef(null);
+
+  // Mouse tracking for parallax effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 80, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 80, damping: 20 });
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.03;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.03;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.9, filter: "blur(4px)" },
@@ -25,28 +46,74 @@ function ProjectGallery({ cover, gallery }) {
     <>
       <div>
         <motion.div
+          ref={ref}
           variants={scaleRevealVariants}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
           onClick={() => setOpen(true)}
           onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          whileHover={{
-            y: motionConfig.hoverLift,
-            scale: motionConfig.hoverScale,
-            borderColor: "rgba(139, 92, 246, 0.3)",
-            boxShadow: "0 25px 50px rgba(124, 58, 237, 0.2)",
+          onMouseLeave={() => {
+            setHovered(false);
+            handleMouseLeave();
           }}
-          transition={{ duration: motionConfig.normal, ease: motionConfig.ease }}
-          className="project-image relative cursor-pointer overflow-hidden rounded-3xl border border-white/10 shadow-lg shadow-black/10 transition-shadow duration-300 bg-white/5"
+          onMouseMove={handleMouseMove}
+          style={{
+            x: springX,
+            y: springY,
+            rotateX: springY,
+            rotateY: springX,
+          }}
+          animate={{ y: [0, -6, 0] }}
+          transition={{
+            y: {
+              repeat: Infinity,
+              duration: 7,
+              ease: "easeInOut",
+            },
+          }}
+          whileHover={{
+            scale: motionConfig.hoverScale,
+          }}
+          className="project-image relative cursor-pointer overflow-hidden rounded-3xl border border-white/10 shadow-xl shadow-black/15 transition-all duration-500 hover:shadow-[0_30px_80px_rgba(124,58,237,0.3)]"
         >
-          {/* Glass reflection sheen sweep */}
+          {/* Animated border glow */}
+          <motion.div
+            className="absolute inset-[-2px] rounded-3xl bg-gradient-to-r from-violet-600/30 via-fuchsia-600/20 to-blue-600/30 pointer-events-none"
+            animate={{
+              opacity: hovered ? [0.4, 0.7, 0.4] : [0.2, 0.35, 0.2],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+
+          {/* Glass reflection sheen sweep - periodic */}
           <motion.div
             initial={{ x: "-150%" }}
-            animate={hovered ? { x: "150%" } : { x: "-150%" }}
-            transition={{ duration: 1.2, ease: motionConfig.ease }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none transform -skew-x-12 z-10"
+            animate={{ x: "150%" }}
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 5,
+            }}
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none transform -skew-x-12 z-10"
+          />
+
+          {/* Ambient glow behind the image */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-transparent blur-xl pointer-events-none"
+            animate={{
+              opacity: hovered ? [0.4, 0.6, 0.4] : [0.2, 0.3, 0.2],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
 
           <motion.img
@@ -56,7 +123,7 @@ function ProjectGallery({ cover, gallery }) {
             decoding="async"
             animate={hovered ? { scale: 1.05 } : { scale: 1 }}
             transition={{ duration: motionConfig.slow, ease: motionConfig.ease }}
-            className="aspect-video w-full object-cover"
+            className="aspect-video w-full object-cover relative z-10"
           />
         </motion.div>
 

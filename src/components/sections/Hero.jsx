@@ -52,10 +52,9 @@ function Hero() {
 
   useEffect(() => {
     const handleMouseMove = (event) => {
-      const { clientX, clientY } = event;
       const { innerWidth, innerHeight } = window;
-      const x = (clientX - innerWidth / 2) / (innerWidth / 2);
-      const y = (clientY - innerHeight / 2) / (innerHeight / 2);
+      const x = (event.clientX - innerWidth / 2) / (innerWidth / 2);
+      const y = (event.clientY - innerHeight / 2) / (innerHeight / 2);
       mouseX.set(x);
       mouseY.set(y);
     };
@@ -87,25 +86,25 @@ function Hero() {
   const textParallaxX = useTransform(springX, [-1, 1], [-4, 4]);
   const textParallaxY = useTransform(springY, [-1, 1], [-4, 4]);
 
-  // Entrance variants for cinematic reveals
+  // Entrance variants for cinematic reveals with better stagger
   const containerVariants = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: motionConfig.staggerNormal,
-        delayChildren: 0.1,
+        staggerChildren: 0.12,
+        delayChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 25, filter: "blur(8px)" },
+    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
     visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
       transition: {
-        duration: motionConfig.slow,
+        duration: 1,
         ease: motionConfig.ease,
       },
     },
@@ -114,23 +113,33 @@ function Hero() {
   const nameVariants = {
     hidden: {
       opacity: 0,
-      y: 30,
-      filter: "blur(12px)",
+      y: 40,
+      filter: "blur(15px)",
       letterSpacing: "-0.04em",
-      textShadow: "0 0 0px rgba(124, 58, 237, 0)",
     },
     visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
       letterSpacing: "-0.015em",
-      textShadow: "0 0 30px rgba(124, 58, 237, 0.15)",
       transition: {
-        duration: motionConfig.slow,
+        duration: 1.2,
         ease: motionConfig.ease,
       },
     },
   };
+
+  // Floating particles configuration
+  const particles = [
+    { size: 8, delay: 0, duration: 8, x: "10%", y: "20%" },
+    { size: 6, delay: 1, duration: 10, x: "85%", y: "30%" },
+    { size: 10, delay: 2, duration: 12, x: "25%", y: "75%" },
+    { size: 7, delay: 0.5, duration: 9, x: "70%", y: "80%" },
+    { size: 9, delay: 1.5, duration: 11, x: "50%", y: "15%" },
+    { size: 5, delay: 2.5, duration: 7, x: "15%", y: "60%" },
+    { size: 8, delay: 0.8, duration: 13, x: "90%", y: "55%" },
+    { size: 6, delay: 1.8, duration: 8, x: "40%", y: "45%" },
+  ];
 
   return (
     <section
@@ -140,6 +149,21 @@ function Hero() {
       {/* Background depth layers */}
       <AnimatedBackground parallaxX={bgParallaxX} parallaxY={bgParallaxY} />
 
+      {/* Large soft animated violet glow behind left content */}
+      <motion.div
+        className="absolute -left-60 top-1/3 h-[400px] w-[400px] rounded-full bg-violet-600/40 blur-3xl"
+        animate={{
+          scale: [1, 1.15, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Gradient orbs */}
       <GradientOrb
         color="bg-violet-600"
         className="-left-40 top-20 h-[350px] w-[350px]"
@@ -156,6 +180,32 @@ function Hero() {
         delay={0.4}
       />
 
+      {/* Floating blurred particles */}
+      {particles.map((particle, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 blur-sm"
+          style={{
+            left: particle.x,
+            top: particle.y,
+            width: particle.size,
+            height: particle.size,
+          }}
+          animate={{
+            x: [0, 30, -20, 0],
+            y: [0, -30, 20, 0],
+            opacity: [0.2, 0.4, 0.2],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: particle.duration,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: particle.delay,
+          }}
+        />
+      ))}
+
       {/* Content */}
       <motion.div
         variants={containerVariants}
@@ -166,21 +216,66 @@ function Hero() {
         {/* Left Column (Parallax Layered) */}
         <motion.div
           style={{ x: textParallaxX, y: textParallaxY }}
-          className="flex flex-col justify-center"
+          className="flex flex-col justify-center relative"
         >
+          {/* Badge */}
           <Badge variants={itemVariants}>{personal.availability}</Badge>
 
-          <motion.h1
-            variants={nameVariants}
-            className="mt-6 max-w-5xl text-5xl font-black leading-tight sm:text-6xl lg:text-7xl"
-          >
-            {typedName}
-            <motion.span
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ duration: 0.8, repeat: Infinity }}
-              className="inline-block w-1 h-12 ml-2 bg-violet-400 align-middle"
+          {/* Name with glow and shimmer */}
+          <motion.div variants={nameVariants} className="relative mt-6">
+            {/* Glow behind name */}
+            <motion.div
+              className="absolute -inset-4 bg-gradient-to-r from-violet-600/20 via-fuchsia-600/10 to-transparent blur-2xl"
+              animate={{
+                opacity: [0.3, 0.5, 0.3],
+                scale: [1, 1.05, 1],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             />
-          </motion.h1>
+            <h1 className="relative max-w-5xl text-5xl font-black leading-tight sm:text-6xl lg:text-7xl">
+              <span className="bg-gradient-to-r from-white via-violet-200 to-fuchsia-200 bg-clip-text text-transparent relative">
+                {typedName}
+                {/* Animated shimmer */}
+                <motion.span
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent bg-clip-text text-transparent"
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  style={{
+                    backgroundSize: "200% 100%",
+                  }}
+                >
+                  {typedName}
+                </motion.span>
+              </span>
+              {/* Improved blinking cursor */}
+              <motion.span
+                animate={{
+                  opacity: [1, 0, 1],
+                  boxShadow: [
+                    "0 0 0px rgba(139, 92, 246, 0)",
+                    "0 0 15px rgba(139, 92, 246, 0.8)",
+                    "0 0 0px rgba(139, 92, 246, 0)",
+                  ],
+                }}
+                transition={{
+                  duration: 1.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="inline-block w-1.5 h-14 ml-2 bg-violet-400 align-middle rounded-full"
+              />
+            </h1>
+          </motion.div>
 
           <motion.h2
             variants={itemVariants}
@@ -222,42 +317,66 @@ function Hero() {
         </motion.div>
 
         {/* Right Column */}
-        <div className="flex justify-center">
+        <motion.div
+          variants={itemVariants}
+          className="flex justify-center"
+        >
           <ProfileCard mouseX={springX} mouseY={springY} />
-        </div>
+        </motion.div>
       </motion.div>
 
-      {/* Scroll Indicator */}
+      {/* Gradient fade to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0f] to-transparent pointer-events-none" />
+
+      {/* Premium scroll indicator */}
       <motion.div
         style={{ opacity: scrollIndicatorOpacity }}
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 0.6, y: 0 }}
-        whileHover={{ opacity: 1, scale: 1.05 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 0.7, y: 0 }}
+        whileHover={{ opacity: 1, scale: 1.1 }}
         transition={{
-          delay: 1.6,
-          duration: motionConfig.slow,
+          delay: 2,
+          duration: 1,
           ease: motionConfig.ease,
         }}
-        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer pointer-events-auto"
+        className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer pointer-events-auto"
         onClick={() => {
           document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
         }}
       >
-        <span className="text-[10px] uppercase tracking-[0.25em] text-gray-400 font-bold">
-          Scroll
+        <span className="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-bold">
+          Discover
         </span>
-        <div className="relative flex h-9 w-5 items-start justify-center rounded-full border border-white/20 p-1">
+        <div className="relative flex h-12 w-6 items-start justify-center rounded-full border border-white/25 p-1.5 backdrop-blur-sm">
+          {/* Animated glow ring */}
           <motion.div
+            className="absolute inset-0 rounded-full border border-violet-500/30"
             animate={{
-              y: [0, 8, 0],
-              opacity: [0.5, 1, 0.5],
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.6, 0.3],
             }}
             transition={{
-              duration: 1.6,
+              duration: 2,
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="h-1.5 w-1 rounded-full bg-violet-400"
+          />
+          <motion.div
+            animate={{
+              y: [0, 14, 0],
+              opacity: [0.4, 1, 0.4],
+              boxShadow: [
+                "0 0 0px rgba(139, 92, 246, 0)",
+                "0 0 10px rgba(139, 92, 246, 0.8)",
+                "0 0 0px rgba(139, 92, 246, 0)",
+              ],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="h-2 w-2 rounded-full bg-violet-400"
           />
         </div>
       </motion.div>

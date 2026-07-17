@@ -16,6 +16,7 @@ function Badge({ children, className = "", ...props }) {
       className={`
         inline-flex
         items-center
+        gap-2
         rounded-full
         border
         border-violet-500/20
@@ -31,6 +32,32 @@ function Badge({ children, className = "", ...props }) {
       `}
       {...props}
     >
+      {/* Animated status indicator */}
+      <motion.span
+        className="relative h-2 w-2 rounded-full bg-violet-400"
+        animate={{
+          scale: [1, 1.4, 1],
+          opacity: [0.6, 1, 0.6],
+        }}
+        transition={{
+          duration: 2.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <motion.span
+          className="absolute -inset-1 rounded-full bg-violet-400/30"
+          animate={{
+            scale: [1, 2, 1],
+            opacity: [0.5, 0, 0.5],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </motion.span>
       {children}
     </motion.span>
   );

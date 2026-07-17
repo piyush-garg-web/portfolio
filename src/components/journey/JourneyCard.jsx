@@ -1,9 +1,32 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import TimelineDot from "./TimelineDot";
 import { motionConfig, slideLeftVariants, slideRightVariants } from "../../utils/motion";
 
-function JourneyCard({ item, reverse }) {
+function JourneyCard({ item, reverse, index }) {
   const [hovered, setHovered] = useState(false);
+  const cardRef = useRef(null);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 120, damping: 18 });
+  const springY = useSpring(mouseY, { stiffness: 120, damping: 18 });
+  const lightX = useTransform(springX, [-1, 1], [30, 70]);
+  const lightY = useTransform(springY, [-1, 1], [30, 70]);
+
+  const handleMouseMove = (event) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    const y = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const resetMouse = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   return (
     <motion.div
@@ -11,47 +34,127 @@ function JourneyCard({ item, reverse }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
-      className={`w-full lg:w-[45%] ${
-        reverse ? "lg:ml-auto lg:mr-0" : "lg:ml-0 lg:mr-auto"
-      }`}
+      className="relative grid grid-cols-[32px_minmax(0,1fr)] items-center gap-4 md:grid-cols-[minmax(0,1fr)_40px_minmax(0,1fr)] md:gap-8"
     >
-      <motion.div
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        whileHover={{
-          y: motionConfig.hoverLift,
-          scale: motionConfig.hoverScale,
-          borderColor: "rgba(139, 92, 246, 0.4)",
-          backgroundColor: "rgba(139, 92, 246, 0.08)",
-          boxShadow: "0 20px 40px rgba(124, 58, 237, 0.15)",
-        }}
-        transition={{ duration: motionConfig.normal, ease: motionConfig.ease }}
-        className="interactive-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition-shadow duration-300 cursor-default"
-      >
-        {/* Glass reflection sheen sweep */}
+      <div className={`hidden md:block ${reverse ? "order-3" : "order-1"}`} />
+
+      <div className="relative z-10 order-1 flex h-full items-center justify-center md:order-2">
+        <TimelineDot index={index} />
+      </div>
+
+      <div className={`relative order-2 ${reverse ? "md:order-1" : "md:order-3"}`}>
         <motion.div
-          initial={{ x: "-150%" }}
-          animate={hovered ? { x: "150%" } : { x: "-150%" }}
-          transition={{ duration: 1.0, ease: motionConfig.ease }}
-          className="absolute inset-0 -z-5 bg-gradient-to-r from-transparent via-white/12 to-transparent pointer-events-none transform -skew-x-12"
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: motionConfig.normal, ease: motionConfig.ease, delay: 0.15 + index * 0.05 }}
+          className={`absolute top-1/2 hidden h-px w-8 md:block ${
+            reverse
+              ? "right-[-2rem] origin-right bg-gradient-to-l from-violet-400/70 to-transparent"
+              : "left-[-2rem] origin-left bg-gradient-to-r from-violet-400/70 to-transparent"
+          }`}
         />
 
-        <p className="text-sm font-semibold text-violet-400">
-          {item.year}
-        </p>
+        <motion.div
+          ref={cardRef}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => {
+            setHovered(false);
+            resetMouse();
+          }}
+          onMouseMove={handleMouseMove}
+          animate={{ y: [0, -4, 0] }}
+          transition={{
+            y: {
+              duration: 7 + index * 0.4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+          }}
+          whileHover={{
+            y: -6,
+            scale: motionConfig.hoverScale,
+            borderColor: "rgba(139, 92, 246, 0.38)",
+            boxShadow: "0 24px 60px rgba(88, 28, 135, 0.2), 0 12px 30px rgba(0, 0, 0, 0.18)",
+          }}
+          className="interactive-card relative overflow-hidden rounded-3xl border border-white/12 bg-white/6 p-6 backdrop-blur-xl shadow-[0_24px_60px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500 will-change-transform md:p-8"
+        >
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `radial-gradient(circle at ${lightX}% ${lightY}%, rgba(139, 92, 246, 0.16), transparent 58%)`,
+            }}
+          />
 
-        <h3 className="mt-2 text-2xl font-bold text-white">
-          {item.title}
-        </h3>
+          <motion.div
+            className="absolute inset-0 rounded-3xl pointer-events-none"
+            animate={{
+              opacity: hovered ? [0.2, 0.35, 0.2] : [0.12, 0.2, 0.12],
+            }}
+            transition={{
+              duration: 4.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(139,92,246,0.16), rgba(255,255,255,0.03) 40%, rgba(236,72,153,0.08) 100%)",
+            }}
+          />
 
-        <p className="mt-1 text-sm text-violet-300">
-          {item.location}
-        </p>
+          <motion.div
+            initial={{ x: "-140%" }}
+            animate={{ x: "140%" }}
+            transition={{
+              duration: 2.6,
+              repeat: Infinity,
+              repeatDelay: 4.5 + index * 0.4,
+              ease: "easeInOut",
+            }}
+            className="absolute inset-0 pointer-events-none bg-gradient-to-r from-transparent via-white/12 to-transparent -skew-x-12"
+          />
 
-        <p className="mt-5 leading-7 text-gray-400">
-          {item.description}
-        </p>
-      </motion.div>
+          <motion.div
+            className="absolute inset-0 rounded-3xl pointer-events-none"
+            animate={{ opacity: hovered ? 0.9 : 0.55 }}
+            transition={{ duration: motionConfig.normal, ease: motionConfig.ease }}
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.12), transparent 28%, transparent 70%, rgba(139,92,246,0.12))",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)",
+            }}
+          />
+
+          <div className="relative z-10">
+            <div className="inline-flex rounded-full border border-violet-400/25 bg-violet-500/10 px-4 py-1.5 backdrop-blur-md shadow-[0_8px_24px_rgba(124,58,237,0.16)]">
+              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-violet-300">
+                {item.year}
+              </span>
+            </div>
+
+            <h3 className="mt-4 text-2xl font-bold leading-tight text-white md:text-[1.75rem]">
+              {item.title}
+            </h3>
+
+            <p className="mt-3 text-sm font-medium tracking-[0.08em] text-violet-300/90 uppercase">
+              {item.location}
+            </p>
+
+            <p className="mt-5 text-base leading-8 text-gray-300 md:text-[1.02rem]">
+              {item.description}
+            </p>
+          </div>
+
+          <motion.div
+            className="absolute -inset-4 rounded-[2rem] bg-violet-600/18 blur-2xl pointer-events-none -z-10"
+            animate={{
+              opacity: hovered ? 0.45 : 0.18,
+              scale: hovered ? 1.04 : 1,
+            }}
+            transition={{ duration: motionConfig.normal, ease: motionConfig.ease }}
+          />
+        </motion.div>
+      </div>
     </motion.div>
   );
 }
