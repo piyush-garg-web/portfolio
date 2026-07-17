@@ -6,7 +6,7 @@ function Loader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const delay = window.matchMedia("(max-width: 767px)").matches ? 450 : 2000;
+    const delay = window.matchMedia("(max-width: 767px)").matches ? 1200 : 1800;
     const timer = setTimeout(() => {
       setLoading(false);
     }, delay);

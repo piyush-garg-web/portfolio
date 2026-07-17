@@ -24,24 +24,14 @@ function CustomCursor() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (!finePointer.matches || reducedMotion.matches) return undefined;
 
-    const pointer = { x: -100, y: -100, previousX: -100, previousY: -100, speed: 0 };
+    const pointer = { x: -100, y: -100, speed: 0, angle: 0 };
     const points = Array.from({ length: TRAIL_LENGTH }, () => ({ x: -100, y: -100 }));
     let frameId = null;
     let visible = false;
     let lastMoveAt = 0;
 
     const paint = () => {
-      const { x, y } = pointer;
-      const deltaX = x - pointer.previousX;
-      const deltaY = y - pointer.previousY;
-      const distance = Math.hypot(deltaX, deltaY);
-      pointer.speed = pointer.speed * 0.82 + Math.min(distance, 32) * 0.18;
-      pointer.previousX = x;
-      pointer.previousY = y;
-
-      const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-      const stretch = 1 + Math.min(pointer.speed / 44, 0.34);
-      cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${angle}deg) scaleX(${stretch})`;
+      pointer.speed *= 0.88;
 
       points.forEach((point, index) => {
         const leader = index === 0 ? pointer : points[index - 1];
@@ -73,13 +63,19 @@ function CustomCursor() {
     };
 
     const handlePointerMove = (event) => {
+      const deltaX = event.clientX - pointer.x;
+      const deltaY = event.clientY - pointer.y;
       pointer.x = event.clientX;
       pointer.y = event.clientY;
+      pointer.speed = Math.min(Math.hypot(deltaX, deltaY), 32);
+      if (pointer.speed > 0.1) pointer.angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
       lastMoveAt = performance.now();
       if (!visible) {
         visible = true;
         cursorRef.current.style.opacity = "1";
       }
+      const stretch = 1 + Math.min(pointer.speed / 70, 0.16);
+      cursorRef.current.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0) rotate(${pointer.angle}deg) scaleX(${stretch})`;
       start();
     };
 
