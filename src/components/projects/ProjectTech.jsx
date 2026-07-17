@@ -26,16 +26,18 @@ function ProjectTech({ tech }) {
               opacity: 1,
               scale: 1,
               filter: "blur(0px)",
-              transition: { duration: motionConfig.fast, ease: motionConfig.ease },
             },
           }}
           animate={{
             opacity: [0.9, 1, 0.9],
           }}
           transition={{
-            duration: 4 + index * 0.5,
-            repeat: Infinity,
-            ease: "easeInOut",
+            opacity: {
+              duration: 4 + index * 0.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+            default: { duration: motionConfig.fast, ease: motionConfig.ease },
           }}
           whileHover={{
             y: -3,
@@ -46,7 +48,6 @@ function ProjectTech({ tech }) {
             boxShadow: "0 8px 16px rgba(124, 58, 237, 0.25)",
           }}
           whileTap={{ scale: motionConfig.tapScale }}
-          transition={{ duration: motionConfig.fast, ease: motionConfig.ease }}
           className="rounded-full border border-violet-500/25 bg-violet-500/12 px-3 py-2 text-sm text-violet-300 cursor-default relative"
         >
           {/* Breathing glow */}

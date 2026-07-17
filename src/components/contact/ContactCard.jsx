@@ -22,8 +22,8 @@ function ContactCard() {
   const handleMouseMove = (e) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.03;
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.03;
+    const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+    const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
     mouseX.set(x);
     mouseY.set(y);
   };
@@ -42,10 +42,6 @@ function ContactCard() {
         handleMouseLeave();
       }}
       onMouseMove={handleMouseMove}
-      style={{
-        x: springX,
-        y: springY,
-      }}
       animate={{ y: [0, -6, 0] }}
       transition={{
         y: {
@@ -60,7 +56,7 @@ function ContactCard() {
         scale: motionConfig.hoverScale,
         borderColor: "rgba(139, 92, 246, 0.3)",
       }}
-      className="interactive-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-2xl shadow-xl shadow-black/15 transition-all duration-500 cursor-default"
+      className="interactive-card gpu-layer relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-2xl shadow-xl shadow-black/15 transition-[border-color,box-shadow] duration-500 cursor-default"
     >
       {/* Animated border glow */}
       <motion.div

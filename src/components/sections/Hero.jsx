@@ -37,7 +37,7 @@ function Hero() {
     }, isDeleting ? 100 : 150); // Typing speed
 
     return () => clearTimeout(typing);
-  }, [charIndex, isDeleting, personal.name]);
+  }, [charIndex, isDeleting]);
   // Capture cursor position normalized coordinates [-1, 1]
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);

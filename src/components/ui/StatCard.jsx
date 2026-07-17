@@ -42,14 +42,13 @@ function StatCard({ value, label, delay = 0, ...props }) {
     ease: "easeInOut",
   }}
   whileHover={{
-    y: -6,
     scale: 1.04,
     borderColor: "rgba(139, 92, 246, 0.3)",
     backgroundColor: "rgba(255, 255, 255, 0.08)",
     boxShadow: "0 8px 24px rgba(124, 58, 237, 0.15)",
   }}
   whileTap={{ scale: 0.98 }}
-  className="relative overflow-hidden cursor-default rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl"
+  className="gpu-layer relative overflow-hidden cursor-default rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl"
   {...props}
 >
       {/* Subtle glow */}

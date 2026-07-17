@@ -26,6 +26,7 @@ function Navbar() {
   const springY = useSpring(mouseY, { stiffness: 120, damping: 22 });
 
   useEffect(() => {
+    const header = headerRef.current;
     const handleMouseMove = (e) => {
       if (headerRef.current) {
         const rect = headerRef.current.getBoundingClientRect();
@@ -41,12 +42,12 @@ function Navbar() {
       mouseY.set(0);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    headerRef.current?.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    header?.addEventListener("mouseleave", handleMouseLeave);
     
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      headerRef.current?.removeEventListener("mouseleave", handleMouseLeave);
+      header?.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, [mouseX, mouseY]);
 

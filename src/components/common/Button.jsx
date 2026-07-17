@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { motionConfig } from "../../utils/motion";
 
 function Button({
@@ -11,45 +11,24 @@ function Button({
   ...props
 }) {
   const ref = useRef(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [shineKey, setShineKey] = useState(0);
   const [hovered, setHovered] = useState(false);
+  const magneticX = useMotionValue(0);
+  const magneticY = useMotionValue(0);
+  const x = useSpring(magneticX, { stiffness: 340, damping: 26, mass: 0.55 });
+  const y = useSpring(magneticY, { stiffness: 340, damping: 26, mass: 0.55 });
 
-  // Magnetic effect
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const x = (e.clientX - (rect.left + rect.width / 2)) * 0.12;
-      const y = (e.clientY - (rect.top + rect.height / 2)) * 0.12;
-      setPosition({ x, y });
-    };
+  const handleMouseMove = (event) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    magneticX.set((event.clientX - (rect.left + rect.width / 2)) * 0.12);
+    magneticY.set((event.clientY - (rect.top + rect.height / 2)) * 0.12);
+  };
 
-    const handleMouseLeave = () => {
-      setPosition({ x: 0, y: 0 });
-    };
-
-    const element = ref.current;
-    if (element) {
-      element.addEventListener("mousemove", handleMouseMove);
-      element.addEventListener("mouseleave", handleMouseLeave);
-    }
-
-    return () => {
-      if (element) {
-        element.removeEventListener("mousemove", handleMouseMove);
-        element.removeEventListener("mouseleave", handleMouseLeave);
-      }
-    };
-  }, []);
-
-  // Periodic shine every 10 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setShineKey((prev) => prev + 1);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
+  const handleMouseLeave = () => {
+    magneticX.set(0);
+    magneticY.set(0);
+    setHovered(false);
+  };
 
   const baseClasses =
     "relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium overflow-hidden transition-shadow duration-300";
@@ -63,15 +42,13 @@ function Button({
   };
 
   const content = (
-    <div
+    <motion.div
       ref={ref}
-      style={{
-        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-        transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-      }}
-      className="inline-block"
+      style={{ x, y, translateZ: 0 }}
+      className="gpu-layer inline-block"
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       <motion.div
         animate={
@@ -113,7 +90,6 @@ function Button({
         {/* Periodic shine + hover shine */}
         {variant === "primary" && (
           <motion.div
-            key={shineKey + (hovered ? "-hover" : "-idle")}
             initial={{ x: "-100%" }}
             animate={{ x: "200%" }}
             transition={
@@ -132,7 +108,7 @@ function Button({
 
         <span className="relative z-10">{children}</span>
       </motion.div>
-    </div>
+    </motion.div>
   );
 
   if (href) {

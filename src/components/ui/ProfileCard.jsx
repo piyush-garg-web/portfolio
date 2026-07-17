@@ -112,7 +112,7 @@ function ProfileCard({ mouseX, mouseY }) {
         onMouseLeave={() => setHovered(false)}
         animate={
           hovered
-            ? { y: motionConfig.hoverLift, scale: motionConfig.hoverScale }
+            ? { scale: motionConfig.hoverScale }
             : { y: [0, -10, 0], scale: 1 }
         }
         transition={
@@ -127,7 +127,7 @@ function ProfileCard({ mouseX, mouseY }) {
                 scale: { duration: motionConfig.normal, ease: motionConfig.ease },
               }
         }
-        className="profile-image relative rounded-[32px] border border-white/15 bg-white/5 p-6 backdrop-blur-2xl overflow-hidden shadow-xl shadow-black/15 transition-all duration-500 hover:shadow-[0_30px_80px_rgba(124,58,237,0.3),0_20px_50px_rgba(37,99,235,0.2)]"
+        className="profile-image gpu-layer relative rounded-[32px] border border-white/15 bg-white/5 p-6 backdrop-blur-2xl overflow-hidden shadow-xl shadow-black/15 transition-shadow duration-500 hover:shadow-[0_30px_80px_rgba(124,58,237,0.3),0_20px_50px_rgba(37,99,235,0.2)]"
       >
         {/* Moving light reflection */}
         <motion.div
@@ -176,7 +176,7 @@ function ProfileCard({ mouseX, mouseY }) {
             alt="Piyush Garg"
             loading="lazy"
             decoding="async"
-            className="aspect-square w-full rounded-3xl object-cover relative z-10 shadow-xl"
+            className="gpu-layer aspect-square w-full rounded-3xl object-cover relative z-10 shadow-xl"
           />
         </div>
 

@@ -72,12 +72,11 @@ function JourneyCard({ item, reverse, index }) {
             },
           }}
           whileHover={{
-            y: -6,
             scale: motionConfig.hoverScale,
             borderColor: "rgba(139, 92, 246, 0.38)",
             boxShadow: "0 24px 60px rgba(88, 28, 135, 0.2), 0 12px 30px rgba(0, 0, 0, 0.18)",
           }}
-          className="interactive-card relative overflow-hidden rounded-3xl border border-white/12 bg-white/6 p-6 backdrop-blur-xl shadow-[0_24px_60px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-500 will-change-transform md:p-8"
+          className="interactive-card gpu-layer relative overflow-hidden rounded-3xl border border-white/12 bg-white/6 p-6 backdrop-blur-xl shadow-[0_24px_60px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[border-color,box-shadow] duration-500 md:p-8"
         >
           <motion.div
             className="absolute inset-0 pointer-events-none"

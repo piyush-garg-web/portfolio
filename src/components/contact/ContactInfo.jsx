@@ -65,14 +65,13 @@ function ContactInfo() {
               delay: index * 0.15,
             }}
             whileHover={{
-              y: motionConfig.hoverLiftSmall,
               scale: motionConfig.hoverScale,
               borderColor: "rgba(139, 92, 246, 0.4)",
               backgroundColor: "rgba(139, 92, 246, 0.08)",
               boxShadow: "0 12px 24px rgba(124, 58, 237, 0.15)",
             }}
             whileTap={{ scale: motionConfig.tapScale }}
-            className="interactive-card flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl transition-all duration-300 cursor-default relative overflow-hidden"
+            className="interactive-card gpu-layer flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl transition-[border-color,background-color,box-shadow] duration-300 cursor-default relative overflow-hidden"
           >
             {/* Animated border glow */}
             <motion.div

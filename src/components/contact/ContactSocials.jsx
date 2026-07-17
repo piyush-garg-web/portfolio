@@ -46,14 +46,13 @@ function ContactSocials() {
               delay: index * 0.15,
             }}
             whileHover={{
-              y: motionConfig.hoverLift,
               scale: motionConfig.hoverScale,
               borderColor: "rgba(139, 92, 246, 0.45)",
               backgroundColor: "rgba(139, 92, 246, 0.15)",
               boxShadow: "0 16px 32px rgba(124, 58, 237, 0.2)",
             }}
             whileTap={{ scale: motionConfig.tapScale }}
-            className="social-icon flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl transition-all duration-300 cursor-pointer relative overflow-hidden"
+            className="social-icon gpu-layer flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl transition-[border-color,background-color,box-shadow] duration-300 cursor-pointer relative overflow-hidden"
           >
             {/* Animated border glow */}
             <motion.div

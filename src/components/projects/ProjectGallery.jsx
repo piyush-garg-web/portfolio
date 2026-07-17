@@ -1,11 +1,11 @@
-import { useState, useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { memo, useState, useRef, useCallback, useMemo } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 import ProjectLightbox from "./ProjectLightbox";
 import { motionConfig, scaleRevealVariants, staggerContainerVariants, viewportConfig } from "../../utils/motion";
 
 function ProjectGallery({ cover, gallery }) {
-  const images = [cover, ...gallery];
+  const images = useMemo(() => [cover, ...gallery], [cover, gallery]);
 
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
@@ -18,19 +18,19 @@ function ProjectGallery({ cover, gallery }) {
   const springX = useSpring(mouseX, { stiffness: 80, damping: 20 });
   const springY = useSpring(mouseY, { stiffness: 80, damping: 20 });
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const x = (e.clientX - rect.left - rect.width / 2) * 0.03;
     const y = (e.clientY - rect.top - rect.height / 2) * 0.03;
     mouseX.set(x);
     mouseY.set(y);
-  };
+  }, [mouseX, mouseY]);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     mouseX.set(0);
     mouseY.set(0);
-  };
+  }, [mouseX, mouseY]);
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.9, filter: "blur(4px)" },
@@ -64,18 +64,11 @@ function ProjectGallery({ cover, gallery }) {
             rotateX: springY,
             rotateY: springX,
           }}
-          animate={{ y: [0, -6, 0] }}
-          transition={{
-            y: {
-              repeat: Infinity,
-              duration: 7,
-              ease: "easeInOut",
-            },
-          }}
           whileHover={{
             scale: motionConfig.hoverScale,
           }}
-          className="project-image relative cursor-pointer overflow-hidden rounded-3xl border border-white/10 shadow-xl shadow-black/15 transition-all duration-500 hover:shadow-[0_30px_80px_rgba(124,58,237,0.3)]"
+          transition={{ type: "spring", stiffness: 340, damping: 28, mass: 0.7 }}
+          className="project-image gpu-layer relative cursor-pointer overflow-hidden rounded-3xl border border-white/10 shadow-xl shadow-black/15 transition-shadow duration-500 hover:shadow-[0_30px_80px_rgba(124,58,237,0.3)]"
         >
           {/* Animated border glow */}
           <motion.div
@@ -123,7 +116,7 @@ function ProjectGallery({ cover, gallery }) {
             decoding="async"
             animate={hovered ? { scale: 1.05 } : { scale: 1 }}
             transition={{ duration: motionConfig.slow, ease: motionConfig.ease }}
-            className="aspect-video w-full object-cover relative z-10"
+            className="gpu-layer aspect-video w-full object-cover relative z-10"
           />
         </motion.div>
 
@@ -177,4 +170,4 @@ function ProjectGallery({ cover, gallery }) {
   );
 }
 
-export default ProjectGallery;
+export default memo(ProjectGallery);

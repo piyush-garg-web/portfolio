@@ -5,7 +5,7 @@ import about from "../../data/about";
 import Section from "../layout/Section";
 import SectionHeading from "../ui/SectionHeading";
 import InfoCard from "../ui/InfoCard";
-import { revealVariants, staggerContainerVariants, viewportConfig, motionConfig } from "../../utils/motion";
+import { revealVariants, staggerContainerVariants, viewportConfig } from "../../utils/motion";
 
 function About() {
   // Floating particles for About section

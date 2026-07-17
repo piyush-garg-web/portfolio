@@ -4,14 +4,25 @@ function useScrolled() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    let frameId = null;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      if (frameId !== null) return;
+      frameId = requestAnimationFrame(() => {
+        setScrolled((current) => {
+          const next = window.scrollY > 40;
+          return current === next ? current : next;
+        });
+        frameId = null;
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () =>
+    return () => {
+      if (frameId !== null) cancelAnimationFrame(frameId);
       window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return scrolled;

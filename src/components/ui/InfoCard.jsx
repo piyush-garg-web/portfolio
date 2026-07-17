@@ -52,14 +52,13 @@ function InfoCard({ title, value, index = 0, ...props }) {
         },
       }}
       whileHover={{
-        y: motionConfig.hoverLiftSmall,
         scale: motionConfig.hoverScale,
       }}
       whileHoverTransition={{
         duration: motionConfig.normal,
         ease: motionConfig.ease,
       }}
-      className="interactive-card relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl shadow-lg shadow-black/10 cursor-default"
+      className="interactive-card gpu-layer relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl shadow-lg shadow-black/10 cursor-default"
       {...props}
     >
       {/* Animated border glow */}

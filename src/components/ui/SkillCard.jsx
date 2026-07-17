@@ -57,15 +57,13 @@ function SkillCard({ title, skills, index = 0, ...props }) {
         },
       }}
       whileHover={{
-        y: motionConfig.hoverLift,
         scale: motionConfig.hoverScale,
-        rotate: 0,
       }}
       whileHoverTransition={{
         duration: motionConfig.slow,
         ease: motionConfig.ease,
       }}
-      className="interactive-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl shadow-xl shadow-black/15 cursor-default"
+      className="interactive-card gpu-layer relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-2xl shadow-xl shadow-black/15 cursor-default"
       {...props}
     >
       {/* Animated border glow */}

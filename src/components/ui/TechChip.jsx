@@ -61,7 +61,6 @@ function TechChip({
       }}
       onMouseMove={handleMouseMove}
       whileHover={{
-        y: motionConfig.hoverLiftSmall,
         scale: 1.08,
         zIndex: 10,
       }}
@@ -69,7 +68,7 @@ function TechChip({
         duration: motionConfig.normal,
         ease: motionConfig.ease,
       }}
-      className="rounded-full border border-violet-500/25 bg-violet-500/12 px-4 py-2 text-sm text-violet-300 backdrop-blur-xl cursor-default relative"
+      className="gpu-layer rounded-full border border-violet-500/25 bg-violet-500/12 px-4 py-2 text-sm text-violet-300 backdrop-blur-xl cursor-default relative"
       {...props}
     >
       {/* Breathing glow */}
