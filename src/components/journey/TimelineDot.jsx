@@ -4,11 +4,11 @@ import { motionConfig } from "../../utils/motion";
 function TimelineDot({ index }) {
   return (
     <motion.div
-      initial={{ scale: 0, opacity: 0 }}
+      initial={false}
       whileInView={{ scale: 1, opacity: 1 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: motionConfig.normal, ease: motionConfig.ease, delay: index * 0.08 }}
-      className="relative z-10"
+      className="relative z-10 block h-5 w-5 shrink-0"
     >
       {/* Expanding ripple effect */}
       <motion.div

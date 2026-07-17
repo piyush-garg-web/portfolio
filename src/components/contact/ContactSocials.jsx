@@ -52,7 +52,7 @@ function ContactSocials() {
               boxShadow: "0 16px 32px rgba(124, 58, 237, 0.2)",
             }}
             whileTap={{ scale: motionConfig.tapScale }}
-            className="social-icon gpu-layer flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl transition-[border-color,background-color,box-shadow] duration-300 cursor-pointer relative overflow-hidden"
+            className="social-icon gpu-layer flex min-w-0 items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl transition-[border-color,background-color,box-shadow] duration-300 cursor-pointer relative overflow-hidden"
           >
             {/* Animated border glow */}
             <motion.div
@@ -108,7 +108,7 @@ function ContactSocials() {
               </motion.div>
             </div>
 
-            <span className="font-medium text-white relative z-10">{social.name}</span>
+            <span className="relative z-10 min-w-0 break-words text-sm font-medium leading-tight text-white sm:text-base">{social.name}</span>
           </motion.a>
         );
       })}

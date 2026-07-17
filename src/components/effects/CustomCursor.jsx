@@ -13,7 +13,7 @@ const INTERACTIVE_SELECTOR = [
   ".profile-image",
 ].join(",");
 
-const TRAIL_LENGTH = 18;
+const TRAIL_LENGTH = 4;
 
 function CustomCursor() {
   const cursorRef = useRef(null);

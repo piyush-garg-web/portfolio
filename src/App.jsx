@@ -31,14 +31,10 @@ function App() {
         <Hero />
 
         <About />
-
         <Skills />
-
         <Projects />
-
         <Journey />
-
-       <Contact />
+        <Contact />
       </motion.main>
       <Footer />
     </>

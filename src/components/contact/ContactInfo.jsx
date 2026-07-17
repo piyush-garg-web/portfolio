@@ -102,7 +102,7 @@ function ContactInfo() {
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none transform -skew-x-12"
             />
 
-            <div className="rounded-xl bg-violet-600/25 p-3 text-violet-400 relative z-10">
+            <div className="shrink-0 rounded-xl bg-violet-600/25 p-3 text-violet-400 relative z-10">
               <motion.div
                 animate={{
                   opacity: [0.7, 1, 0.7],
@@ -118,7 +118,7 @@ function ContactInfo() {
               <Icon size={20} aria-hidden="true" className="relative z-10" />
             </div>
 
-            <div className="relative z-10">
+            <div className="relative z-10 min-w-0">
               <p className="text-sm text-gray-400">{item.label}</p>
 
               {item.href ? (
@@ -128,10 +128,10 @@ function ContactInfo() {
                   whileHover={{ x: 4, color: "#c4b5fd" }}
                   whileTap={{ scale: motionConfig.tapScale }}
                   transition={{ duration: motionConfig.fast, ease: motionConfig.ease }}
-                  className="flex items-center gap-2 text-left text-white transition-colors"
+                  className="flex min-w-0 w-full items-center gap-2 break-all text-left text-white transition-colors"
                 >
                   {item.value}
-                  <motion.div
+                  <motion.div className="shrink-0"
                     animate={{
                       rotate: isCopied ? 360 : 0,
                     }}
