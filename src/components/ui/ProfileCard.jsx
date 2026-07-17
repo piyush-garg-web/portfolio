@@ -174,8 +174,7 @@ function ProfileCard({ mouseX, mouseY }) {
             variants={childVariants}
             src="/assets/images/profile/profile.JPG"
             alt="Piyush Garg"
-            loading="eager"
-            fetchPriority="high"
+            loading="lazy"
             decoding="async"
             className="gpu-layer aspect-square w-full rounded-3xl object-cover relative z-10 shadow-xl"
           />

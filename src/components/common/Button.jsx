@@ -11,6 +11,7 @@ function Button({
   ...props
 }) {
   const ref = useRef(null);
+  const boundsRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const magneticX = useMotionValue(0);
   const magneticY = useMotionValue(0);
@@ -18,16 +19,22 @@ function Button({
   const y = useSpring(magneticY, { stiffness: 340, damping: 26, mass: 0.55 });
 
   const handleMouseMove = (event) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
+    const rect = boundsRef.current;
+    if (!rect) return;
     magneticX.set((event.clientX - (rect.left + rect.width / 2)) * 0.12);
     magneticY.set((event.clientY - (rect.top + rect.height / 2)) * 0.12);
   };
 
   const handleMouseLeave = () => {
+    boundsRef.current = null;
     magneticX.set(0);
     magneticY.set(0);
     setHovered(false);
+  };
+
+  const handleMouseEnter = () => {
+    if (ref.current) boundsRef.current = ref.current.getBoundingClientRect();
+    setHovered(true);
   };
 
   const baseClasses =
@@ -46,7 +53,7 @@ function Button({
       ref={ref}
       style={{ x, y, translateZ: 0 }}
       className="gpu-layer inline-block"
-      onMouseEnter={() => setHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >

@@ -42,11 +42,11 @@ function Navbar() {
       mouseY.set(0);
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    header?.addEventListener("pointermove", handleMouseMove, { passive: true });
     header?.addEventListener("mouseleave", handleMouseLeave);
     
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      header?.removeEventListener("pointermove", handleMouseMove);
       header?.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, [mouseX, mouseY]);

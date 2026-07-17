@@ -6,22 +6,28 @@ function AnimatedBackground({ parallaxX, parallaxY }) {
       {/* Base background */}
       <div className="absolute inset-0 -z-30 bg-[#030712]" />
 
-      {/* Aurora gradient mesh - extremely slow movement */}
+      {/* Aurora mesh cross-fade: opacity is composited, unlike animated gradients. */}
       <motion.div
         animate={{
-          background: [
-            "radial-gradient(ellipse at 20% 30%, rgba(92, 58, 237, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(37, 99, 235, 0.06) 0%, transparent 50%)",
-            "radial-gradient(ellipse at 80% 30%, rgba(124, 58, 237, 0.07) 0%, transparent 50%), radial-gradient(ellipse at 20% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%)",
-            "radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 50% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 50%)",
-            "radial-gradient(ellipse at 20% 30%, rgba(92, 58, 237, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(37, 99, 235, 0.06) 0%, transparent 50%)",
-          ],
+          opacity: [0.82, 0.42, 0.82],
         }}
         transition={{
           duration: 50,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute inset-0 -z-25 pointer-events-none"
+        className="gpu-layer absolute inset-0 -z-25 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at 20% 30%, rgba(92, 58, 237, 0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(37, 99, 235, 0.06) 0%, transparent 50%)",
+        }}
+      />
+      <motion.div
+        animate={{ opacity: [0.18, 0.6, 0.18] }}
+        transition={{ duration: 50, repeat: Infinity, ease: "easeInOut" }}
+        className="gpu-layer absolute inset-0 -z-25 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at 80% 30%, rgba(124, 58, 237, 0.07) 0%, transparent 50%), radial-gradient(ellipse at 20% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%)",
+        }}
       />
 
       {/* Floating blurred gradient orbs - global floating system with different timings */}
