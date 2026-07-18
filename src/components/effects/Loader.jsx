@@ -3,16 +3,20 @@ import { useEffect, useState } from "react";
 import { motionConfig } from "../../utils/motion";
 
 function Loader() {
-  const [loading, setLoading] = useState(true);
+  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+  // An opaque timed overlay prevents the first committed mobile frame from
+  // being visible. Desktop keeps its existing loader sequence unchanged.
+  const [loading, setLoading] = useState(() => !isMobile);
 
   useEffect(() => {
-    const delay = window.matchMedia("(max-width: 767px)").matches ? 1200 : 1800;
+    if (isMobile) return undefined;
+
     const timer = setTimeout(() => {
       setLoading(false);
-    }, delay);
+    }, 1800);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isMobile]);
 
   return (
     <AnimatePresence>

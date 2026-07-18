@@ -14,6 +14,8 @@ import Loader from "./components/effects/Loader";
 import { motionConfig } from "./utils/motion";
 
 function App() {
+  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
   return (
     <>
      <Loader />
@@ -24,9 +26,16 @@ function App() {
       <CustomCursor />
 
       <motion.main
-        initial={{ opacity: 0, y: 12 }}
+        // The desktop entrance remains unchanged. On mobile, starting the whole
+        // document transparent hides the committed Hero until animation work
+        // receives a frame.
+        initial={isMobile ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: motionConfig.slow, ease: motionConfig.ease, delay: 1 }}
+        transition={{
+          duration: motionConfig.slow,
+          ease: motionConfig.ease,
+          delay: isMobile ? 0 : 1,
+        }}
       >
         <Hero />
 
