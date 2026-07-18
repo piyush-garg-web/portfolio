@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import Navbar from "./components/layout/Navbar";
 
 import Hero from "./components/sections/Hero";
@@ -15,6 +16,17 @@ import { motionConfig } from "./utils/motion";
 
 function App() {
   const isMobile = window.matchMedia("(max-width: 767px)").matches;
+  const [deferredContentMounted, setDeferredContentMounted] = useState(() => !isMobile);
+
+  useEffect(() => {
+    if (!isMobile) return undefined;
+
+    // Let the browser paint the mounted Hero once before constructing the
+    // below-the-fold motion trees. They still mount during the loader, without
+    // waiting for any scroll interaction.
+    const frame = requestAnimationFrame(() => setDeferredContentMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, [isMobile]);
 
   return (
     <>
@@ -39,11 +51,15 @@ function App() {
       >
         <Hero />
 
-        <About />
-        <Skills />
-        <Projects />
-        <Journey />
-        <Contact />
+        {deferredContentMounted && (
+          <>
+            <About />
+            <Skills />
+            <Projects />
+            <Journey />
+            <Contact />
+          </>
+        )}
       </motion.main>
       <Footer />
     </>
