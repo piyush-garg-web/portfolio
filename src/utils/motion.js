@@ -3,7 +3,7 @@
 
 export const motionConfig = {
   // Easing functions - premium, smooth feel
-  ease: [0.16, 1, 0.3, 1], // Custom bezier for elegant motion
+  ease: [0.22, 1, 0.36, 1], // Unified soft deceleration for continuous motion
   easeOut: [0.22, 1, 0.36, 1],
   easeInOut: "easeInOut",
   
@@ -35,7 +35,7 @@ export const motionConfig = {
   
   // Stagger delays for cinematic reveals
   staggerFast: 0.08,
-  staggerNormal: 0.15,
+  staggerNormal: 0.16,
   staggerSlow: 0.12,
   
   // Opacity values for subtle effects
