@@ -13,6 +13,7 @@ import ProfileCard from "../ui/ProfileCard";
 import { motionConfig, parallaxMax } from "../../utils/motion";
 
 function Hero() {
+  const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
   const [typedName, setTypedName] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
@@ -91,20 +92,53 @@ function Hero() {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.2,
+        staggerChildren: 0.14,
+        delayChildren: 0.16,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
+    hidden: isDesktop
+      ? { opacity: 0, x: -24, scale: 0.985, filter: "blur(8px)" }
+      : { opacity: 0, y: 26, scale: 0.985, filter: "blur(8px)" },
     visible: {
       opacity: 1,
       y: 0,
+      x: 0,
+      scale: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 1,
+        duration: 1.15,
+        ease: motionConfig.ease,
+      },
+    },
+  };
+
+  const leftColumnVariants = {
+    hidden: isDesktop ? { opacity: 0, x: -72 } : {},
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 1.2,
+        ease: motionConfig.ease,
+      },
+    },
+  };
+
+  const rightColumnVariants = {
+    hidden: isDesktop
+      ? { opacity: 0, x: 72, scale: 0.985, filter: "blur(8px)" }
+      : { opacity: 0, y: 26, scale: 0.985, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 1.2,
         ease: motionConfig.ease,
       },
     },
@@ -113,17 +147,19 @@ function Hero() {
   const nameVariants = {
     hidden: {
       opacity: 0,
-      y: 40,
-      filter: "blur(15px)",
+      y: 32,
+      scale: 0.98,
+      filter: "blur(10px)",
       letterSpacing: "-0.04em",
     },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       filter: "blur(0px)",
       letterSpacing: "-0.015em",
       transition: {
-        duration: 1.2,
+        duration: 1.35,
         ease: motionConfig.ease,
       },
     },
@@ -215,6 +251,9 @@ function Hero() {
       >
         {/* Left Column (Parallax Layered) */}
         <motion.div
+          variants={leftColumnVariants}
+        >
+          <motion.div
           style={{ x: textParallaxX, y: textParallaxY }}
           className="flex flex-col justify-center relative"
         >
@@ -315,10 +354,11 @@ function Hero() {
             <SocialLinks />
           </motion.div>
         </motion.div>
+        </motion.div>
 
         {/* Right Column */}
         <motion.div
-          variants={itemVariants}
+          variants={rightColumnVariants}
           className="flex justify-center"
         >
           <ProfileCard mouseX={springX} mouseY={springY} />
