@@ -4,16 +4,18 @@ import { motionConfig } from "../../utils/motion";
 
 function Loader() {
   const isMobile = window.matchMedia("(max-width: 767px)").matches;
-  const [loading, setLoading] = useState(true);
+  // Mobile opens directly into the Hero entrance so an overlay never delays
+  // the first visible page. Desktop retains the branded loading sequence.
+  const [loading, setLoading] = useState(() => !isMobile);
 
   useEffect(() => {
-    // Keep the branded loader on every device. Unlike the previous page-wide
-    // opacity gate, the Hero mounts behind this overlay and is ready before it
-    // exits.
-    const delay = isMobile ? 1200 : 1800;
+    if (isMobile) return undefined;
+
+    // Keep the branded loader on desktop. The Hero mounts behind this overlay
+    // and is ready before it exits.
     const timer = setTimeout(() => {
       setLoading(false);
-    }, delay);
+    }, 1800);
 
     return () => clearTimeout(timer);
   }, [isMobile]);
