@@ -139,8 +139,8 @@ function Navbar() {
           }}
           className={`mx-auto mt-4 flex max-w-7xl items-center justify-between rounded-2xl border transition-all duration-700 relative overflow-hidden ${
             scrolled
-              ? "border-white/30 bg-black/90 px-6 py-2.5 shadow-2xl shadow-black/70 backdrop-blur-[60px]"
-              : "border-white/20 bg-black/60 px-6 py-4 backdrop-blur-3xl shadow-2xl shadow-black/50"
+              ? "border-white/30 bg-black/90 px-6 py-2.5 shadow-2xl shadow-black/70 backdrop-blur-xl"
+              : "border-white/20 bg-black/60 px-6 py-4 backdrop-blur-xl shadow-2xl shadow-black/50"
           }`}
         >
           {/* Animated gradient glow inside navbar */}

@@ -107,14 +107,27 @@ a {
   backface-visibility: hidden;
 }
 
+/* Do not permanently promote every glass card to its own compositor layer.
+   On desktop this quickly exhausts GPU memory and makes wheel scrolling janky. */
 .gpu-layer {
-  transform: translateZ(0);
   backface-visibility: hidden;
 }
 
-@media (pointer: fine) {
-  .gpu-layer {
-    will-change: transform, opacity;
+/* Sections outside the viewport do not need to be painted while scrolling.
+   The intrinsic size preserves the document's scroll geometry and anchor links. */
+@media (min-width: 768px) {
+  .scroll-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1100px;
+  }
+
+  /* Backdrop sampling is recalculated as the page moves beneath a card.
+     A lighter blur keeps the glass effect while substantially reducing the
+     amount of desktop compositing work during wheel and trackpad scrolling. */
+  .interactive-card,
+  .social-icon,
+  .profile-image {
+    backdrop-filter: blur(10px);
   }
 }
 
