@@ -191,9 +191,9 @@ function ProfileCard({ mouseX, mouseY }) {
           variants={staggerContainer}
           className="mt-8 grid grid-cols-3 gap-3 relative z-10"
         >
-          <StatCard variants={childVariants} value="246+" label="Solved" delay={0} />
-          <StatCard variants={childVariants} value="181+" label="LeetCode" delay={0.2} />
-          <StatCard variants={childVariants} value="65+" label="GFG" delay={0.4} />
+          <StatCard variants={childVariants} value="300+" label="Solved" delay={0} />
+          <StatCard variants={childVariants} value="180+" label="LeetCode" delay={0.2} />
+          <StatCard variants={childVariants} value="120+" label="GFG" delay={0.4} />
         </motion.div>
 
         {/* Tech chips list */}
