@@ -36,7 +36,7 @@ const journey = [
     title: "Competitive Programming Journey",
     location: "LeetCode & GeeksforGeeks",
     description:
-      "Solved 246+ Data Structures & Algorithms problems to strengthen problem-solving, algorithmic thinking, and interview preparation.",
+      "Solved 300+ Data Structures & Algorithms problems to strengthen problem-solving, algorithmic thinking, and interview preparation.",
   },
 
   {

@@ -12,16 +12,16 @@ const codingProfiles = {
   leetcode: {
     username: "Pleetpro1",
     url: "https://leetcode.com/u/Pleetpro1/",
-    solved: "181+",
+    solved: "180+",
   },
 
   gfg: {
     username: "piyushgarg07",
     url: "https://www.geeksforgeeks.org/profile/piyushgarg07/",
-    solved: "65+",
+    solved: "120+",
   },
 
-  totalSolved: "246+",
+  totalSolved: "300+",
 };
 
 export default codingProfiles;
